@@ -2,11 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/view/screens/registration_screen.dart';
+import 'package:sportify/utils/constants.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
 import '../../cubits/login/login_cubit.dart';
+import '../../utils/styles.dart';
+import '../custom_widgets/custom_text_field.dart';
 import 'home_screen.dart';
+import 'registration_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login';
@@ -21,38 +24,41 @@ class LoginScreen extends StatelessWidget {
           Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
         }
       },
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Email',
-              ),
-              onChanged: (value) {
-                context.read<LoginCubit>().emailChanged(value);
-              },
+      child: SafeArea(
+        child: Scaffold(
+          body: Padding(
+            padding: sDefaultScreenPadding,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomTextField(
+                  labelText: 'Email',
+                  obscureText: false,
+                  onChangedFunc: (value) =>
+                      context.read<LoginCubit>().emailChanged(value),
+                ),
+                const SizedBox(height: cDefaultWidgetInterval),
+                CustomTextField(
+                  labelText: 'Password',
+                  obscureText: true,
+                  onChangedFunc: (value) =>
+                      context.read<LoginCubit>().passwordChanged(value),
+                ),
+                const SizedBox(height: cDefaultWidgetInterval),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<LoginCubit>().signIn();
+                  },
+                  child: const Text('Signin'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context)
+                      .pushReplacementNamed(RegistrationScreen.routeName),
+                  child: const Text('Go to registration'),
+                ),
+              ],
             ),
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              onChanged: (value) {
-                context.read<LoginCubit>().passwordChanged(value);
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.read<LoginCubit>().signIn();
-              },
-              child: const Text('Signin'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(RegistrationScreen.routeName),
-              child: const Text('Go to registration'),
-            ),
-          ],
+          ),
         ),
       ),
     );
