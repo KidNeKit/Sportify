@@ -22,7 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthUserChanged(AuthUserChanged event, Emitter<AuthState> emit) {
-    log('user loaded: $state');
+    log('user loaded: ${event.user}');
     emit(AuthState.authenticated(user: event.user));
   }
 

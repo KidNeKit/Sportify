@@ -10,7 +10,7 @@ import 'package:bloc/bloc.dart';
 class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case HomeScreen.routeName:
         return MaterialPageRoute(builder: (ctx) => const HomeScreen());
       case RegistrationScreen.routeName:
         return MaterialPageRoute(
