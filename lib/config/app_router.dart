@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/cubits/registration/registration_cubit.dart';
 import 'package:sportify/view/screens/home_screen.dart';
 import 'package:sportify/view/screens/registration_screen.dart';
+
+import 'package:bloc/bloc.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {
@@ -8,7 +12,11 @@ class AppRouter {
       case '/':
         return MaterialPageRoute(builder: (ctx) => const HomeScreen());
       case RegistrationScreen.routeName:
-        return MaterialPageRoute(builder: (ctx) => const RegistrationScreen());
+        return MaterialPageRoute(
+            builder: (ctx) => BlocProvider(
+                  create: (context) => RegistrationCubit(),
+                  child: const RegistrationScreen(),
+                ));
       default:
         return null;
     }
