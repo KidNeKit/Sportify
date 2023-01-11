@@ -18,13 +18,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       : _authRepository = authRepository,
         super(const AuthState.unknown()) {
     _userSubscription = _authRepository.user
-        .listen((firebaseUser) => add(AuthUserChanged(user: firebaseUser!)));
+        .listen((firebaseUser) => add(AuthUserChanged(user: firebaseUser)));
     on<AuthUserChanged>(_onAuthUserChanged);
+    on<LogOutRequested>(_onLogOutRequested);
   }
 
   void _onAuthUserChanged(AuthUserChanged event, Emitter<AuthState> emit) {
     log('{Auth Bloc} Loaded User: ${event.user}');
-    emit(AuthState.authenticated(user: event.user));
+    emit(event.user != null
+        ? AuthState.authenticated(user: event.user)
+        : const AuthState.unauthenticated());
+  }
+
+  void _onLogOutRequested(LogOutRequested event, Emitter<AuthState> emit) {
+    log('{Auth Bloc} Log out...');
+    unawaited(_authRepository.logOut());
+    emit(const AuthState.unauthenticated());
   }
 
   @override

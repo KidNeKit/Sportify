@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
 import 'home_screen.dart';
-import 'registration_screen.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   static const String routeName = '/splash';
@@ -15,12 +16,13 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (ctx, state) {
+        log('{Splash Screen} Auth state ${state.toString()}');
         Timer(
           const Duration(seconds: 1),
           () => Navigator.of(ctx).pushReplacementNamed(
               state.status == AuthStatus.authorized
                   ? HomeScreen.routeName
-                  : RegistrationScreen.routeName),
+                  : LoginScreen.routeName),
         );
       },
       child: Scaffold(

@@ -2,21 +2,21 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/view/screens/home_screen.dart';
-import 'package:sportify/view/screens/login_screen.dart';
+import 'package:sportify/view/screens/registration_screen.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
-import '../../cubits/registration/registration_cubit.dart';
+import '../../cubits/login/login_cubit.dart';
+import 'home_screen.dart';
 
-class RegistrationScreen extends StatelessWidget {
-  static const routeName = '/registration';
-  const RegistrationScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  static const String routeName = '/login';
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (ctx, state) {
-        log('{Registration Screen} Auth state: ${state.toString()}');
+        log('{Login Screen} Auth state: ${state.toString()}');
         if (state.status == AuthStatus.authorized) {
           Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
         }
@@ -30,7 +30,7 @@ class RegistrationScreen extends StatelessWidget {
                 labelText: 'Email',
               ),
               onChanged: (value) {
-                context.read<RegistrationCubit>().emailChanged(value);
+                context.read<LoginCubit>().emailChanged(value);
               },
             ),
             TextField(
@@ -38,19 +38,19 @@ class RegistrationScreen extends StatelessWidget {
                 labelText: 'Password',
               ),
               onChanged: (value) {
-                context.read<RegistrationCubit>().passwordChanged(value);
+                context.read<LoginCubit>().passwordChanged(value);
               },
             ),
             ElevatedButton(
               onPressed: () {
-                context.read<RegistrationCubit>().signup();
+                context.read<LoginCubit>().signIn();
               },
-              child: const Text('Signup'),
+              child: const Text('Signin'),
             ),
             TextButton(
               onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(LoginScreen.routeName),
-              child: const Text('Go to login'),
+                  .pushReplacementNamed(RegistrationScreen.routeName),
+              child: const Text('Go to registration'),
             ),
           ],
         ),

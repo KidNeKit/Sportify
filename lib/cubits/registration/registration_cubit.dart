@@ -1,8 +1,9 @@
 import 'dart:developer';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sportify/repositories/auth_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../repositories/auth_repository.dart';
 
 part 'registration_state.dart';
 
