@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:sportify/repositories/auth_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../repositories/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -22,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthUserChanged(AuthUserChanged event, Emitter<AuthState> emit) {
-    log('user loaded: ${event.user}');
+    log('{Auth Bloc} Loaded User: ${event.user}');
     emit(AuthState.authenticated(user: event.user));
   }
 

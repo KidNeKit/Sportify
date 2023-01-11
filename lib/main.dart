@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/config/app_router.dart';
-import 'package:sportify/repositories/auth_repository.dart';
-import 'package:sportify/view/screens/registration_screen.dart';
 
 import 'blocs/auth/auth_bloc.dart';
-import 'view/screens/home_screen.dart';
+import 'config/app_router.dart';
+import 'repositories/auth_repository.dart';
+import 'view/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         create: (ctx) => AuthBloc(authRepository: ctx.read<AuthRepository>()),
         child: MaterialApp(
           onGenerateRoute: _appRouter.onGenerateRoute,
-          initialRoute: RegistrationScreen.routeName,
+          initialRoute: SplashScreen.routeName,
         ),
       ),
     );
