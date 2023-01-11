@@ -1,5 +1,7 @@
 part of 'registration_cubit.dart';
 
+enum RegistrationStatus { initial, processing, success, error }
+
 class RegistrationState extends Equatable {
   final String email;
   final String password;
@@ -8,7 +10,7 @@ class RegistrationState extends Equatable {
   const RegistrationState.initial()
       : email = '',
         password = '',
-        status = RegistrationStatus.processing;
+        status = RegistrationStatus.initial;
 
   const RegistrationState(
       {required this.email, required this.password, required this.status});

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/blocs/auth/auth_bloc.dart';
 import 'package:sportify/cubits/registration/registration_cubit.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -14,31 +15,20 @@ class RegistrationScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocBuilder<RegistrationCubit, RegistrationState>(
-            buildWhen: (previous, current) => previous.email != current.email,
-            builder: (ctx, state) {
-              return TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-                onChanged: (value) {
-                  ctx.read<RegistrationCubit>().emailChanged(value);
-                },
-              );
+          TextField(
+            decoration: const InputDecoration(
+              labelText: 'Email',
+            ),
+            onChanged: (value) {
+              context.read<RegistrationCubit>().emailChanged(value);
             },
           ),
-          BlocBuilder<RegistrationCubit, RegistrationState>(
-            buildWhen: (previous, current) =>
-                previous.password != current.password,
-            builder: (ctx, state) {
-              return TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-                onChanged: (value) {
-                  ctx.read<RegistrationCubit>().passwordChanged(value);
-                },
-              );
+          TextField(
+            decoration: const InputDecoration(
+              labelText: 'Password',
+            ),
+            onChanged: (value) {
+              context.read<RegistrationCubit>().passwordChanged(value);
             },
           ),
           ElevatedButton(
@@ -49,10 +39,16 @@ class RegistrationScreen extends StatelessWidget {
           ),
           BlocBuilder<RegistrationCubit, RegistrationState>(
             buildWhen: (previous, current) => previous.status != current.status,
-            builder: ((context, state) => state.status ==
-                    RegistrationStatus.processing
-                ? const Text('Registration is in progress')
-                : Text('Email: ${state.email}, Password: ${state.password}')),
+            builder: ((context, state) {
+              log(context.read<AuthBloc>().state.toString());
+              if (state.status == RegistrationStatus.processing) {
+                return const CircularProgressIndicator();
+              } else if (state.status == RegistrationStatus.success) {
+                return Text(
+                    'Email: ${state.email}, Password: ${state.password}');
+              }
+              return const Text('initial state');
+            }),
           ),
         ],
       ),
