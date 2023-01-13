@@ -22,6 +22,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('building login screen');
+    Size screenSize = MediaQuery.of(context).size;
     return BlocListener<AuthBloc, AuthState>(
       listener: (ctx, state) {
         log('{Login Screen} Auth state: ${state.toString()}');
@@ -31,29 +33,73 @@ class LoginScreen extends StatelessWidget {
       },
       child: SafeArea(
         child: Scaffold(
-          body: Padding(
-            padding: sDefaultScreenPadding,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+          body: SingleChildScrollView(
+            child: SizedBox(
+              height:
+                  screenSize.height - MediaQuery.of(context).viewPadding.top,
+              width: screenSize.width,
+              child: Stack(
                 children: [
-                  EmailTextField(validator: _validator),
-                  const SizedBox(height: cDefaultWidgetInterval / 2),
-                  PasswordTextField(validator: _validator),
-                  const SizedBox(height: cDefaultWidgetInterval),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<LoginCubit>().signIn();
-                      }
-                    },
-                    child: const Text('Signin'),
+                  Positioned(
+                    top: -100,
+                    left: -100,
+                    child: Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.purple.withOpacity(0.5),
+                      ),
+                    ),
                   ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushReplacementNamed(RegistrationScreen.routeName),
-                    child: const Text('Go to registration'),
+                  Positioned(
+                    bottom: -120,
+                    right: -80,
+                    child: Container(
+                      height: 300,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.purple.withOpacity(0.5),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: sDefaultScreenPadding,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Welcome back!',
+                            style: TextStyle(
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 2 * cDefaultWidgetInterval),
+                          EmailTextField(validator: _validator),
+                          const SizedBox(height: cDefaultWidgetInterval / 2),
+                          PasswordTextField(validator: _validator),
+                          const SizedBox(height: cDefaultWidgetInterval / 2),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                context.read<LoginCubit>().signIn();
+                              }
+                            },
+                            child: const Text('Signin'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(context)
+                                .pushReplacementNamed(
+                                    RegistrationScreen.routeName),
+                            child: const Text('Go to registration'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
