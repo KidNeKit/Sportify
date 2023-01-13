@@ -19,7 +19,7 @@ class AuthRepository {
       return user;
     } catch (e) {
       log('Error due user authorization: $e');
-      return null;
+      rethrow;
     }
   }
 

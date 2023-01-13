@@ -19,7 +19,7 @@ class AppRouter {
             builder: (ctx) => BlocProvider(
                   create: (ctx) =>
                       LoginCubit(authRepository: ctx.read<AuthRepository>()),
-                  child: const LoginScreen(),
+                  child: LoginScreen(),
                 ));
       case RegistrationScreen.routeName:
         return MaterialPageRoute(
