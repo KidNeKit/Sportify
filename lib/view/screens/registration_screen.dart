@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/utils/styles.dart';
 import 'package:sportify/view/screens/home_screen.dart';
 import 'package:sportify/view/screens/login_screen.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
 import '../../cubits/registration/registration_cubit.dart';
+import '../../utils/constants.dart';
 
 class RegistrationScreen extends StatelessWidget {
   static const routeName = '/registration';
@@ -14,6 +16,8 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    log('building registration screen');
     return BlocListener<AuthBloc, AuthState>(
       listener: (ctx, state) {
         log('{Registration Screen} Auth state: ${state.toString()}');
@@ -22,39 +26,91 @@ class RegistrationScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Email',
-              ),
-              onChanged: (value) {
-                context.read<RegistrationCubit>().emailChanged(value);
-              },
+        body: SafeArea(
+          child: SizedBox(
+            height: size.height,
+            width: double.infinity,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: -100,
+                  left: -100,
+                  child: Container(
+                    height: 200,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.purple.withOpacity(0.5),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: -120,
+                  right: -80,
+                  child: Container(
+                    height: 300,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.purple.withOpacity(0.5),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: sDefaultScreenPadding,
+                  child: Form(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                          ),
+                          onChanged: (value) {
+                            context
+                                .read<RegistrationCubit>()
+                                .emailChanged(value);
+                          },
+                        ),
+                        const SizedBox(height: cDefaultWidgetInterval / 2),
+                        TextField(
+                          decoration: const InputDecoration(
+                            labelText: 'Password',
+                          ),
+                          onChanged: (value) {
+                            context
+                                .read<RegistrationCubit>()
+                                .passwordChanged(value);
+                          },
+                        ),
+                        const SizedBox(height: cDefaultWidgetInterval / 2),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<RegistrationCubit>().signup();
+                          },
+                          child: const Text('Signup'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context)
+                              .pushReplacementNamed(LoginScreen.routeName),
+                          child: const Text('Go to login'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              onChanged: (value) {
-                context.read<RegistrationCubit>().passwordChanged(value);
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.read<RegistrationCubit>().signup();
-              },
-              child: const Text('Signup'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(LoginScreen.routeName),
-              child: const Text('Go to login'),
-            ),
-          ],
+          ),
         ),
       ),
+      //   body: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
