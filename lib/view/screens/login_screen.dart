@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
 import '../../cubits/login/login_cubit.dart';
-import '../../utils/validator.dart';
 import '../custom_widgets/input_fields/custom_text_field.dart';
 import 'home_screen.dart';
 import 'registration_screen.dart';
@@ -13,10 +12,7 @@ import 'registration_screen.dart';
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login';
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final Validator _validator = Validator();
-
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,42 +58,31 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Welcome back!',
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 40),
-                          EmailTextField(validator: _validator),
-                          const SizedBox(height: 10),
-                          PasswordTextField(validator: _validator),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context.read<LoginCubit>().signIn();
-                              }
-                            },
-                            child: const Text('Signin'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.of(context)
-                                .pushReplacementNamed(
-                                    RegistrationScreen.routeName),
-                            child: const Text('Go to registration'),
-                          ),
-                        ],
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Welcome back!',
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 40),
+                      const EmailTextField(),
+                      const SizedBox(height: 10),
+                      const PasswordTextField(),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () => context.read<LoginCubit>().signIn(),
+                        child: const Text('Signin'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(context)
+                            .pushReplacementNamed(RegistrationScreen.routeName),
+                        child: const Text('Go to registration'),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -110,42 +95,35 @@ class LoginScreen extends StatelessWidget {
 }
 
 class EmailTextField extends StatelessWidget {
-  final Validator _validator;
-  const EmailTextField({required Validator validator, super.key})
-      : _validator = validator;
+  const EmailTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.status != current.status,
-      builder: (context, state) {
-        String? errorText = state.status == LoginStatus.error
-            ? 'Error due login on firebase side'
-            : null;
-        return CustomTextField(
-          hint: 'Email',
-          errorText: errorText,
-          onChangedFunc: (value) =>
-              context.read<LoginCubit>().emailChanged(value),
-          validatorFunc: (value) => _validator.validateEmail(value),
-        );
-      },
-    );
+        buildWhen: (previous, current) =>
+            previous.emailError != current.emailError,
+        builder: (context, state) => CustomTextField(
+              hint: 'Email',
+              errorText: state.emailError,
+              onChangedFunc: (value) =>
+                  context.read<LoginCubit>().emailChanged(value),
+            ));
   }
 }
 
 class PasswordTextField extends StatelessWidget {
-  final Validator _validator;
-  const PasswordTextField({required Validator validator, super.key})
-      : _validator = validator;
+  const PasswordTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CustomTextField(
-      hint: 'Password',
-      onChangedFunc: (value) =>
-          context.read<LoginCubit>().passwordChanged(value),
-      validatorFunc: (value) => _validator.validatePassword(value),
-    );
+    return BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) =>
+            previous.passwordError != current.passwordError,
+        builder: (ctx, state) => CustomTextField(
+              hint: 'Password',
+              errorText: state.passwordError,
+              onChangedFunc: (value) =>
+                  context.read<LoginCubit>().passwordChanged(value),
+            ));
   }
 }

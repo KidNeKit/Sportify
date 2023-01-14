@@ -4,18 +4,15 @@ class CustomTextField extends StatelessWidget {
   final String _hint;
   final Function(String) _onChangedFunc;
   final String? _errorText;
-  final String? Function(String?)? _validatorFunc;
 
   const CustomTextField(
       {required String hint,
       required Function(String) onChangedFunc,
       String? errorText,
-      String? Function(String?)? validatorFunc,
       super.key})
       : _hint = hint,
         _onChangedFunc = onChangedFunc,
-        _errorText = errorText,
-        _validatorFunc = validatorFunc;
+        _errorText = errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +23,6 @@ class CustomTextField extends StatelessWidget {
         errorText: _errorText,
       ),
       onChanged: _onChangedFunc,
-      validator: _validatorFunc,
     );
   }
 }
