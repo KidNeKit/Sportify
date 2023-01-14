@@ -20,6 +20,7 @@ InputDecorationTheme tIntputDecorationTheme = InputDecorationTheme(
 
 TextTheme tTextTheme = TextTheme(
   titleLarge: titleLarge,
+  bodyLarge: bodyLarge,
   labelLarge: labelLarge,
   labelMedium: labelMedium,
   labelSmall: labelSmall,

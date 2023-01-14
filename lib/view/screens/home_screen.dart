@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
-import 'login_screen.dart';
+import 'auth/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';

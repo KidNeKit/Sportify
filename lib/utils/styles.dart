@@ -17,6 +17,13 @@ TextStyle titleLarge = const TextStyle(
   color: Colors.black,
 );
 
+TextStyle bodyLarge = const TextStyle(
+  fontFamily: 'DMSans',
+  fontWeight: FontWeight.w700,
+  fontSize: 40.0,
+  color: Colors.black,
+);
+
 TextStyle labelLarge = const TextStyle(
   fontFamily: 'DMSans',
   fontWeight: FontWeight.w400,

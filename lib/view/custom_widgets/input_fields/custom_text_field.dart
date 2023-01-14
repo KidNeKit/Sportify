@@ -16,13 +16,16 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: _hint,
-        helperText: '',
-        errorText: _errorText,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextField(
+        decoration: InputDecoration(
+          labelText: _hint,
+          helperText: '',
+          errorText: _errorText,
+        ),
+        onChanged: _onChangedFunc,
       ),
-      onChanged: _onChangedFunc,
     );
   }
 }
