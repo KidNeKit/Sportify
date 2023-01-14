@@ -2,13 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/utils/constants.dart';
-import 'package:sportify/utils/validator.dart';
-import 'package:sportify/view/custom_widgets/input_fields/custom_text_field.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
 import '../../cubits/login/login_cubit.dart';
-import '../../utils/styles.dart';
+import '../../utils/validator.dart';
+import '../custom_widgets/input_fields/custom_text_field.dart';
 import 'home_screen.dart';
 import 'registration_screen.dart';
 
@@ -65,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: sDefaultScreenPadding,
+                    padding: const EdgeInsets.all(20.0),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -78,11 +76,11 @@ class LoginScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 2 * cDefaultWidgetInterval),
+                          const SizedBox(height: 40),
                           EmailTextField(validator: _validator),
-                          const SizedBox(height: cDefaultWidgetInterval / 2),
+                          const SizedBox(height: 10),
                           PasswordTextField(validator: _validator),
-                          const SizedBox(height: cDefaultWidgetInterval / 2),
+                          const SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {

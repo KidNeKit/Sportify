@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/blocs/auth/auth_bloc.dart';
-import 'package:sportify/view/screens/login_screen.dart';
+
+import '../../blocs/auth/auth_bloc.dart';
+import 'login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';
@@ -24,8 +25,11 @@ class HomeScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            const Center(
-              child: Text('Home'),
+            Center(
+              child: Text(
+                'Home',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ),
             ElevatedButton(
               onPressed: () {

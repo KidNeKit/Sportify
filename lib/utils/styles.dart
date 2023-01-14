@@ -1,25 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-const sDefaultScreenPadding = EdgeInsets.all(20.0);
-
-InputDecorationTheme sIntputDecorationTheme = InputDecorationTheme(
-  floatingLabelBehavior: FloatingLabelBehavior.always,
-  enabledBorder: _buildBorder(Colors.purple),
-  errorBorder: _buildBorder(Colors.red),
-  focusedBorder: _buildBorder(Colors.blue),
-
-  //suffixStyle:
-  //counterStyle:
-  //floatingLabelStyle:
-  //errorStyle:
-  //helperStyle:
-  //hintStyle:
-  //labelStyle:
-  //prefixStyle:
-);
-
-OutlineInputBorder _buildBorder(Color color) {
+OutlineInputBorder buildBorder(Color color) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(20.0),
     borderSide: BorderSide(
@@ -28,3 +9,31 @@ OutlineInputBorder _buildBorder(Color color) {
     ),
   );
 }
+
+TextStyle titleLarge = const TextStyle(
+  fontFamily: 'DMSans',
+  fontWeight: FontWeight.w700,
+  fontSize: 30.0,
+  color: Colors.black,
+);
+
+TextStyle labelLarge = const TextStyle(
+  fontFamily: 'DMSans',
+  fontWeight: FontWeight.w400,
+  fontSize: 20.0,
+  color: Colors.black,
+);
+
+TextStyle labelMedium = const TextStyle(
+  fontFamily: 'DMSans',
+  fontWeight: FontWeight.w400,
+  fontSize: 18.0,
+  color: Colors.black,
+);
+
+TextStyle labelSmall = const TextStyle(
+  fontFamily: 'DMSans',
+  fontWeight: FontWeight.w400,
+  fontSize: 14.0,
+  color: Colors.black,
+);
