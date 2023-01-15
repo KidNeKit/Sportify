@@ -25,11 +25,29 @@ class ExercisesListView extends StatelessWidget {
             return ListView.builder(
               itemCount: state.exercises.length,
               itemBuilder: (ctx, index) =>
-                  Text('Exercise ${state.exercises[index].name}'),
+                  ExerciseItem(name: state.exercises[index].name),
             );
           },
         ),
       ),
+    );
+  }
+}
+
+class ExerciseItem extends StatelessWidget {
+  final String name;
+  const ExerciseItem({required this.name, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        border: Border.all(),
+      ),
+      child: Text(name),
     );
   }
 }

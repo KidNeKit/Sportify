@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/blocs/auth/auth_bloc.dart';
 
 import '../cubits/login/login_cubit.dart';
 import '../cubits/registration/registration_cubit.dart';
 import '../repositories/auth_repository.dart';
+import '../repositories/exercise_repository.dart';
 import '../view/screens/auth/login_screen.dart';
 import '../view/screens/auth/registration_screen.dart';
 import '../view/screens/exercise_screen/exercise_screen.dart';
@@ -32,7 +34,12 @@ class AppRouter {
       case HomeScreen.routeName:
         return MaterialPageRoute(builder: (ctx) => const HomeScreen());
       case ExerciseScreen.routeName:
-        return MaterialPageRoute(builder: (ctx) => const ExerciseScreen());
+        return MaterialPageRoute(
+            builder: (ctx) => RepositoryProvider(
+                  create: (ctx) => ExerciseRepository(
+                      userId: ctx.read<AuthBloc>().state.user!.uid),
+                  child: const ExerciseScreen(),
+                ));
       default:
         return null;
     }
