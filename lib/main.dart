@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/repositories/exercise_repository.dart';
 import 'package:sportify/utils/themes.dart';
 
 import 'blocs/auth/auth_bloc.dart';
@@ -21,8 +22,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (ctx) => AuthRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (ctx) => AuthRepository()),
+        RepositoryProvider(create: (ctx) => ExerciseRepository()),
+      ],
       child: BlocProvider(
         create: (ctx) => AuthBloc(authRepository: ctx.read<AuthRepository>()),
         child: MaterialApp(
