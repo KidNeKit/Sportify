@@ -9,7 +9,7 @@ class Exercise {
     return _name;
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {'name': _name};
   }
 
@@ -19,6 +19,6 @@ class Exercise {
 
   @override
   String toString() {
-    return toJson().toString();
+    return toMap().toString();
   }
 }

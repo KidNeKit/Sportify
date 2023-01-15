@@ -21,7 +21,6 @@ class ExerciseRepository {
   }
 
   Future<List<Exercise>> fetchExercises() async {
-    log('userId: $_userId');
     QuerySnapshot query = await _firestore.collection(exercisePath).get();
 
     List<Exercise> exerciseList =
@@ -29,5 +28,28 @@ class ExerciseRepository {
     log(exerciseList.toString());
 
     return exerciseList;
+  }
+
+  Future<List<Exercise>> fetchCustomExercises() async {
+    QuerySnapshot query = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('customExercises')
+        .get();
+
+    List<Exercise> exerciseList =
+        query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
+    log(exerciseList.toString());
+
+    return exerciseList;
+  }
+
+  Future<void> createExercise(Exercise exercise) async {
+    await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('customExercises')
+        .doc(exercise.name)
+        .set(exercise.toMap());
   }
 }

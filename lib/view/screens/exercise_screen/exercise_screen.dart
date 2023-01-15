@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/cubits/exercise/exercise_bloc.dart';
-import 'package:sportify/repositories/exercise_repository.dart';
 
+import '../../../blocs/exercise/exercise_bloc.dart';
+import '../../../repositories/exercise_repository.dart';
 import 'exercise_catalogue.dart';
 import 'exercises_list_view.dart';
 

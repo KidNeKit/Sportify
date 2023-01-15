@@ -34,7 +34,10 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   }
 
   void _getCustomExercises(
-      GetCustomExercises event, Emitter<ExerciseState> emit) {
+      GetCustomExercises event, Emitter<ExerciseState> emit) async {
     log('get custom event');
+    emit(state.copyWith(status: ExerciseStatus.loading));
+    List<Exercise> exercises = await _exerciseRepository.fetchCustomExercises();
+    emit(state.copyWith(status: ExerciseStatus.custom, exercises: exercises));
   }
 }

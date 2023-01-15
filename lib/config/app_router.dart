@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sportify/blocs/auth/auth_bloc.dart';
+import 'package:sportify/view/screens/exercise_creation_screen.dart';
 
+import '../cubits/exercise_creation/exercise_creation_cubit.dart';
 import '../cubits/login/login_cubit.dart';
 import '../cubits/registration/registration_cubit.dart';
 import '../repositories/auth_repository.dart';
@@ -39,6 +41,17 @@ class AppRouter {
                   create: (ctx) => ExerciseRepository(
                       userId: ctx.read<AuthBloc>().state.user!.uid),
                   child: const ExerciseScreen(),
+                ));
+      case ExerciseCreationScreen.routeName:
+        return MaterialPageRoute(
+            builder: (ctx) => RepositoryProvider(
+                  create: (ctx) => ExerciseRepository(
+                      userId: ctx.read<AuthBloc>().state.user!.uid),
+                  child: BlocProvider(
+                    create: (ctx) => ExerciseCreationCubit(
+                        exerciseRepository: ctx.read<ExerciseRepository>()),
+                    child: const ExerciseCreationScreen(),
+                  ),
                 ));
       default:
         return null;

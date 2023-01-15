@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../blocs/exercise/exercise_bloc.dart';
+import '../exercise_creation_screen.dart';
 
 class ExercisesCatalogue extends StatelessWidget {
   const ExercisesCatalogue({
@@ -20,7 +24,10 @@ class ExercisesCatalogue extends StatelessWidget {
             right: 0,
             child: IconButton(
               icon: const Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(ExerciseCreationScreen.routeName);
+              },
             ),
           ),
           Padding(
@@ -46,9 +53,17 @@ class ExercisesCatalogue extends StatelessWidget {
                         ),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.bookmark),
+                    BlocBuilder<ExerciseBloc, ExerciseState>(
+                      builder: (context, state) {
+                        return IconButton(
+                          onPressed: () {
+                            context
+                                .read<ExerciseBloc>()
+                                .add(GetCustomExercises());
+                          },
+                          icon: const Icon(Icons.bookmark),
+                        );
+                      },
                     ),
                   ],
                 ),
