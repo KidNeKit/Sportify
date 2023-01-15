@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../blocs/exercise/exercise_bloc.dart';
+import '../../../../blocs/exercise/exercise_bloc.dart';
 
 class ExercisesListView extends StatelessWidget {
   const ExercisesListView({super.key});
@@ -17,6 +17,17 @@ class ExercisesListView extends StatelessWidget {
             if (state.status == ExerciseStatus.loading) {
               return const Center(
                 child: CircularProgressIndicator(),
+              );
+            }
+            if (state.exercises.isEmpty) {
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: const Center(
+                  child: Text('There is no exercises'),
+                ),
               );
             }
             if (state.status == ExerciseStatus.custom) {

@@ -24,13 +24,19 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       GetAllExercises event, Emitter<ExerciseState> emit) async {
     log('get all event');
 
+    emit(state.copyWith(status: ExerciseStatus.loading));
     List<Exercise> exercises = await _exerciseRepository.fetchExercises();
     emit(state.copyWith(status: ExerciseStatus.all, exercises: exercises));
   }
 
   void _getBookmarkedExercises(
-      GetBookmarkedExercises event, Emitter<ExerciseState> emit) {
+      GetBookmarkedExercises event, Emitter<ExerciseState> emit) async {
     log('get bookmarked event');
+    emit(state.copyWith(status: ExerciseStatus.loading));
+    List<Exercise> exercises =
+        await _exerciseRepository.fetchBookmarkedExercises();
+    emit(
+        state.copyWith(status: ExerciseStatus.bookmarks, exercises: exercises));
   }
 
   void _getCustomExercises(

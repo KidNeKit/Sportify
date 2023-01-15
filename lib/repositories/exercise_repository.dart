@@ -25,7 +25,6 @@ class ExerciseRepository {
 
     List<Exercise> exerciseList =
         query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
-    log(exerciseList.toString());
 
     return exerciseList;
   }
@@ -39,7 +38,18 @@ class ExerciseRepository {
 
     List<Exercise> exerciseList =
         query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
-    log(exerciseList.toString());
+
+    return exerciseList;
+  }
+
+  Future<List<Exercise>> fetchBookmarkedExercises() async {
+    QuerySnapshot query = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('bookmarkedExercises')
+        .get();
+    List<Exercise> exerciseList =
+        query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
 
     return exerciseList;
   }

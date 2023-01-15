@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../blocs/exercise/exercise_bloc.dart';
 import '../../../repositories/exercise_repository.dart';
-import 'exercise_catalogue.dart';
-import 'exercises_list_view.dart';
+import 'components/exercise_catalogue.dart';
+import 'components/exercises_list_view.dart';
 
 class ExerciseScreen extends StatelessWidget {
   static const String routeName = '/exercises';
