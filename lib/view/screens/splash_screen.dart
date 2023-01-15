@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
 import 'auth/login_screen.dart';
-import 'home_screen.dart';
+import 'exercise_screen/exercise_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   static const String routeName = '/splash';
@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
           const Duration(seconds: 1),
           () => Navigator.of(ctx).pushReplacementNamed(
               state.status == AuthStatus.authorized
-                  ? HomeScreen.routeName
+                  ? ExerciseScreen.routeName
                   : LoginScreen.routeName),
         );
       },
