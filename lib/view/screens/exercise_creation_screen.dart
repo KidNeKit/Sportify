@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sportify/blocs/auth/auth_bloc.dart';
+import 'package:sportify/blocs/exercise/exercise_bloc.dart';
 import 'package:sportify/cubits/exercise_creation/exercise_creation_cubit.dart';
 import 'package:sportify/repositories/exercise_repository.dart';
 

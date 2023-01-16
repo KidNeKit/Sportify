@@ -5,20 +5,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/exercise.dart';
 
 class ExerciseRepository {
-  final String _userId;
   final FirebaseFirestore _firestore;
-
-  List<Exercise> _exercises = [];
+  String? _userId;
 
   static const String exercisePath = 'exercises';
 
-  ExerciseRepository({required String userId, FirebaseFirestore? firestore})
-      : _userId = userId,
+  ExerciseRepository({FirebaseFirestore? firestore})
+      : _userId = null,
         _firestore = firestore ?? FirebaseFirestore.instance;
 
-  List<Exercise> get exercises {
-    return [..._exercises];
-  }
+  set setUserId(String id) => _userId = id;
 
   Future<List<Exercise>> fetchExercises() async {
     QuerySnapshot query = await _firestore.collection(exercisePath).get();

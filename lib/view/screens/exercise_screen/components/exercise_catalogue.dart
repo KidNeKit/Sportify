@@ -56,20 +56,20 @@ class ExercisesCatalogue extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ExerciseFilterItem(
-                        isActive: state.status == ExerciseStatus.all,
+                        isActive: state.filter == ExerciseFilter.all,
                         label: 'Default',
                         filterFunc: () =>
                             context.read<ExerciseBloc>().add(GetAllExercises()),
                       ),
                       ExerciseFilterItem(
-                        isActive: state.status == ExerciseStatus.custom,
+                        isActive: state.filter == ExerciseFilter.custom,
                         label: 'Custom',
                         filterFunc: () => context
                             .read<ExerciseBloc>()
                             .add(GetCustomExercises()),
                       ),
                       ExerciseFilterItem(
-                        isActive: state.status == ExerciseStatus.bookmarks,
+                        isActive: state.filter == ExerciseFilter.bookmarks,
                         label: 'Bookmarks',
                         filterFunc: () => context
                             .read<ExerciseBloc>()

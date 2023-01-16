@@ -37,21 +37,14 @@ class AppRouter {
         return MaterialPageRoute(builder: (ctx) => const HomeScreen());
       case ExerciseScreen.routeName:
         return MaterialPageRoute(
-            builder: (ctx) => RepositoryProvider(
-                  create: (ctx) => ExerciseRepository(
-                      userId: ctx.read<AuthBloc>().state.user!.uid),
-                  child: const ExerciseScreen(),
-                ));
+          builder: (ctx) => const ExerciseScreen(),
+        );
       case ExerciseCreationScreen.routeName:
         return MaterialPageRoute(
-            builder: (ctx) => RepositoryProvider(
-                  create: (ctx) => ExerciseRepository(
-                      userId: ctx.read<AuthBloc>().state.user!.uid),
-                  child: BlocProvider(
-                    create: (ctx) => ExerciseCreationCubit(
-                        exerciseRepository: ctx.read<ExerciseRepository>()),
-                    child: const ExerciseCreationScreen(),
-                  ),
+            builder: (ctx) => BlocProvider(
+                  create: (ctx) => ExerciseCreationCubit(
+                      exerciseRepository: ctx.read<ExerciseRepository>()),
+                  child: const ExerciseCreationScreen(),
                 ));
       default:
         return null;

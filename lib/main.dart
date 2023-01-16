@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (ctx) => AuthRepository()),
+        RepositoryProvider(create: (ctx) => ExerciseRepository()),
       ],
       child: BlocProvider(
         create: (ctx) => AuthBloc(authRepository: ctx.read<AuthRepository>()),

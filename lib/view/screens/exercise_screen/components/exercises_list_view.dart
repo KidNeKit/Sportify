@@ -12,9 +12,8 @@ class ExercisesListView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: BlocBuilder<ExerciseBloc, ExerciseState>(
-          //buildWhen: (previous, current) => previous.status != current.status,
           builder: (ctx, state) {
-            if (state.status == ExerciseStatus.loading) {
+            if (state.status == OperationStatus.loading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -30,7 +29,7 @@ class ExercisesListView extends StatelessWidget {
                 ),
               );
             }
-            if (state.status == ExerciseStatus.custom) {
+            if (state.filter == ExerciseFilter.custom) {
               return Text('It is custom: ${state.exercises}');
             }
             return ListView.builder(
