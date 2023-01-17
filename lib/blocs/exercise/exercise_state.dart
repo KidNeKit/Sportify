@@ -2,7 +2,7 @@ part of 'exercise_bloc.dart';
 
 enum ExerciseFilter { all, custom, bookmarks }
 
-enum OperationStatus { initial, loading, successful, failed }
+enum OperationStatus { loading, successful, failed }
 
 class ExerciseState extends Equatable {
   final ExerciseFilter filter;
@@ -10,7 +10,7 @@ class ExerciseState extends Equatable {
   final List<Exercise> exercises;
 
   ExerciseState.initial()
-      : status = OperationStatus.initial,
+      : status = OperationStatus.loading,
         filter = ExerciseFilter.all,
         exercises = [];
 

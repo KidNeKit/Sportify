@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class Exercise {
+class Exercise extends Equatable {
   final String _name;
 
   const Exercise({required String name}) : _name = name;
@@ -21,4 +22,7 @@ class Exercise {
   String toString() {
     return toMap().toString();
   }
+
+  @override
+  List<Object> get props => [_name];
 }
