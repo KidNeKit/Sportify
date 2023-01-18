@@ -2,10 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/blocs/auth/auth_bloc.dart';
-import 'package:sportify/blocs/exercise/exercise_bloc.dart';
-import 'package:sportify/cubits/exercise_creation/exercise_creation_cubit.dart';
-import 'package:sportify/repositories/exercise_repository.dart';
+
+import '../../../cubits/exercise_creation/exercise_creation_cubit.dart';
+import 'components/selected_muscle_group.dart';
 
 class ExerciseCreationScreen extends StatelessWidget {
   static const String routeName = '/exerciseCreation';
@@ -20,6 +19,7 @@ class ExerciseCreationScreen extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Create Your Own Exercise',
@@ -31,6 +31,19 @@ class ExerciseCreationScreen extends StatelessWidget {
                 ),
                 onChanged: (value) =>
                     context.read<ExerciseCreationCubit>().nameChanged(value),
+              ),
+              const SizedBox(height: 10),
+              Text('Primary muscle groups',
+                  style: Theme.of(context).textTheme.labelLarge),
+              const SelectedMuscleGroups(),
+              Text('Secondary muscle groups',
+                  style: Theme.of(context).textTheme.labelLarge),
+              Row(
+                children: const [
+                  Text('Chest'),
+                  Text('Press'),
+                  Text('Shoulders'),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

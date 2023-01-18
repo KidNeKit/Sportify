@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/blocs/auth/auth_bloc.dart';
-import 'package:sportify/view/screens/exercise_creation_screen.dart';
 
-import '../cubits/exercise_creation/exercise_creation_cubit.dart';
 import '../cubits/login/login_cubit.dart';
 import '../cubits/registration/registration_cubit.dart';
 import '../repositories/auth_repository.dart';
-import '../repositories/exercise_repository.dart';
 import '../view/screens/auth/login_screen.dart';
 import '../view/screens/auth/registration_screen.dart';
+import '../view/screens/exercise_creation_screen/exercise_creation_screen.dart';
 import '../view/screens/exercise_screen/exercise_screen.dart';
 import '../view/screens/home_screen.dart';
 import '../view/screens/splash_screen.dart';
@@ -41,11 +38,8 @@ class AppRouter {
         );
       case ExerciseCreationScreen.routeName:
         return MaterialPageRoute(
-            builder: (ctx) => BlocProvider(
-                  create: (ctx) => ExerciseCreationCubit(
-                      exerciseRepository: ctx.read<ExerciseRepository>()),
-                  child: const ExerciseCreationScreen(),
-                ));
+          builder: (ctx) => const ExerciseCreationScreen(),
+        );
       default:
         return null;
     }

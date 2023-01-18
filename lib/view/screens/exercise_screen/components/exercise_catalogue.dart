@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/view/screens/exercise_screen/components/exercise_filter_item.dart';
 
 import '../../../../blocs/exercise/exercise_bloc.dart';
-import '../../exercise_creation_screen.dart';
+import '../../exercise_creation_screen/exercise_creation_screen.dart';
+import 'exercise_filter_item.dart';
 
 class ExercisesCatalogue extends StatelessWidget {
   const ExercisesCatalogue({
