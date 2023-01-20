@@ -22,6 +22,10 @@ class Exercise extends Equatable {
     return _name;
   }
 
+  List<MuscleGroups> get pGroups {
+    return _pGroups;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': _name,
