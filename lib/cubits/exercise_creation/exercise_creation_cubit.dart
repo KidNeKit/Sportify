@@ -27,14 +27,21 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
     emit(state.copyWith(pGroups: list));
   }
 
+  void cancel() {
+    emit(ExerciseCreationState.initial());
+  }
+
   void createExercise() {
     emit(state.copyWith(status: CreationStatus.loading));
 
-    Exercise exercise =
-        Exercise(name: state.name, pGroups: state.pGroups, sGroups: []);
-    _exerciseRepository.createExercise(exercise);
-
-    emit(state.copyWith(status: CreationStatus.success));
-    try {} catch (_) {}
+    try {
+      Exercise exercise =
+          Exercise(name: state.name, pGroups: state.pGroups, sGroups: []);
+      _exerciseRepository.createExercise(exercise);
+      emit(state.copyWith(status: CreationStatus.success));
+    } catch (e) {
+      log('error: $e');
+      emit(state.copyWith(status: CreationStatus.error));
+    }
   }
 }

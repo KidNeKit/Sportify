@@ -107,8 +107,6 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       filter: ExerciseFilter.custom,
       exercises: _customExercises,
     ));
-
-    log(state.toString());
   }
 
   @override

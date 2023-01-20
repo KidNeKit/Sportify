@@ -50,6 +50,7 @@ class ExerciseCreationScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
+                      context.read<ExerciseCreationCubit>().cancel();
                       Navigator.of(context).pop();
                     },
                     child: const Text('Cancel'),
@@ -66,7 +67,10 @@ class ExerciseCreationScreen extends StatelessWidget {
                           context
                               .read<ExerciseCreationCubit>()
                               .createExercise();
-                          Navigator.of(context).pop();
+                          if (state.status == CreationStatus.success) {
+                            context.read<ExerciseCreationCubit>().cancel();
+                            Navigator.of(context).pop();
+                          }
                         },
                         child: const Text('Create'),
                       );

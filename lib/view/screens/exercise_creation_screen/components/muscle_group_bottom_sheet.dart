@@ -15,10 +15,23 @@ class MuscleGroupBottomSheet extends StatelessWidget {
         height: 400,
         width: double.infinity,
         color: Colors.white,
-        child: ListView.builder(
-            itemCount: MuscleGroups.values.length,
-            itemBuilder: (ctx, index) =>
-                MuscleGroupItem(group: MuscleGroups.values[index])),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(15.0),
+              child: const Center(
+                child: TextField(),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: MuscleGroups.values.length,
+                  itemBuilder: (ctx, index) =>
+                      MuscleGroupItem(group: MuscleGroups.values[index])),
+            ),
+          ],
+        ),
       ),
     );
   }
