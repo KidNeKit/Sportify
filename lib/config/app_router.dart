@@ -38,7 +38,7 @@ class AppRouter {
         );
       case ExerciseCreationScreen.routeName:
         return MaterialPageRoute(
-          builder: (ctx) => const ExerciseCreationScreen(),
+          builder: (ctx) => ExerciseCreationScreen(),
         );
       default:
         return null;

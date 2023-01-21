@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/view/screens/exercise_creation_screen/exercise_creation_screen.dart';
 
 import '../../models/enums/muscle_groups.dart';
 import '../../models/exercise.dart';
@@ -31,6 +32,10 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
     emit(state.copyWith(kcal: double.tryParse(kcal)));
   }
 
+  void measureChanged(ExerciseMeasure measure) {
+    emit(state.copyWith(measure: measure));
+  }
+
   void cancel() {
     emit(ExerciseCreationState.initial());
   }
@@ -41,6 +46,7 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
     try {
       Exercise exercise = Exercise(
           name: state.name,
+          measure: state.measure,
           pGroups: state.pGroups,
           sGroups: [],
           kcal: state.kcal);

@@ -9,7 +9,9 @@ import 'components/selected_muscle_group.dart';
 class ExerciseCreationScreen extends StatelessWidget {
   static const String routeName = '/exerciseCreation';
 
-  const ExerciseCreationScreen({super.key});
+  ExerciseMeasure _measure = ExerciseMeasure.quantity;
+
+  ExerciseCreationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +63,42 @@ class ExerciseCreationScreen extends StatelessWidget {
               ),
               Text('Choose exercise measure type',
                   style: Theme.of(context).textTheme.labelLarge),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Quantity'),
-                  Text('Distance'),
-                ],
+              BlocBuilder<ExerciseCreationCubit, ExerciseCreationState>(
+                buildWhen: (previous, current) =>
+                    previous.measure != current.measure,
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: RadioListTile<ExerciseMeasure>(
+                          title: const Text('Quantity'),
+                          value: ExerciseMeasure.quantity,
+                          groupValue: _measure,
+                          onChanged: (value) {
+                            _measure = ExerciseMeasure.quantity;
+                            context
+                                .read<ExerciseCreationCubit>()
+                                .measureChanged(_measure);
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile<ExerciseMeasure>(
+                          title: const Text('Distance'),
+                          value: ExerciseMeasure.distance,
+                          groupValue: _measure,
+                          onChanged: (value) {
+                            _measure = ExerciseMeasure.distance;
+                            context
+                                .read<ExerciseCreationCubit>()
+                                .measureChanged(_measure);
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,5 +138,15 @@ class ExerciseCreationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+enum ExerciseMeasure {
+  quantity,
+  distance;
+
+  @override
+  String toString() {
+    return name;
   }
 }
