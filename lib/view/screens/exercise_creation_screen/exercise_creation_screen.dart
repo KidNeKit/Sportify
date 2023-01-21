@@ -15,7 +15,6 @@ class ExerciseCreationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(context.read<ExerciseCreationCubit>().state.toString());
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -38,15 +37,9 @@ class ExerciseCreationScreen extends StatelessWidget {
               Text('Primary muscle groups',
                   style: Theme.of(context).textTheme.labelLarge),
               const SelectedMuscleGroups(),
-              Text('Secondary muscle groups',
-                  style: Theme.of(context).textTheme.labelLarge),
-              Row(
-                children: const [
-                  Text('Chest'),
-                  Text('Press'),
-                  Text('Shoulders'),
-                ],
-              ),
+              // Text('Secondary muscle groups',
+              //     style: Theme.of(context).textTheme.labelLarge),
+              // const SelectedMuscleGroups(),
               Row(
                 children: [
                   Text('Enter average ccal/hr',
@@ -100,34 +93,47 @@ class ExerciseCreationScreen extends StatelessWidget {
                   );
                 },
               ),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<ExerciseCreationCubit>().cancel();
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Cancel'),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<ExerciseCreationCubit>().cancel();
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancel'),
+                    ),
                   ),
-                  BlocBuilder<ExerciseCreationCubit, ExerciseCreationState>(
+                  const SizedBox(width: 10.0),
+                  BlocConsumer<ExerciseCreationCubit, ExerciseCreationState>(
+                    listener: (context, state) {
+                      log('listener: ${state.status}');
+                      if (state.status == CreationStatus.error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('There is an error')));
+                      }
+                      if (state.status == CreationStatus.success) {
+                        context.read<ExerciseCreationCubit>().cancel();
+                        Navigator.of(context).pop();
+                      }
+                    },
                     buildWhen: (previous, current) =>
                         previous.status != current.status,
                     builder: (context, state) {
                       if (state.status == CreationStatus.loading) {
                         return const CircularProgressIndicator();
                       }
-                      return ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<ExerciseCreationCubit>()
-                              .createExercise();
-                          if (state.status == CreationStatus.success) {
-                            context.read<ExerciseCreationCubit>().cancel();
-                            Navigator.of(context).pop();
-                          }
-                        },
-                        child: const Text('Create'),
+                      return Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context
+                                .read<ExerciseCreationCubit>()
+                                .createExercise();
+                          },
+                          child: const Text('Create'),
+                        ),
                       );
                     },
                   ),

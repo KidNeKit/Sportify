@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sportify/view/screens/exercise_creation_screen/exercise_creation_screen.dart';
@@ -15,7 +16,9 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
 
   ExerciseCreationCubit({required ExerciseRepository exerciseRepository})
       : _exerciseRepository = exerciseRepository,
-        super(ExerciseCreationState.initial());
+        super(ExerciseCreationState.initial()) {
+    log('creation cubit created');
+  }
 
   void nameChanged(String name) {
     log(state.toString());
@@ -43,18 +46,16 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
   void createExercise() {
     emit(state.copyWith(status: CreationStatus.loading));
 
-    try {
-      Exercise exercise = Exercise(
-          name: state.name,
-          measure: state.measure,
-          pGroups: state.pGroups,
-          sGroups: [],
-          kcal: state.kcal);
-      _exerciseRepository.createExercise(exercise);
-      emit(state.copyWith(status: CreationStatus.success));
-    } catch (e) {
-      log('error: $e');
-      emit(state.copyWith(status: CreationStatus.error));
-    }
+    Exercise exercise = Exercise(
+        name: state.name,
+        measure: state.measure,
+        pGroups: state.pGroups,
+        sGroups: [],
+        kcal: state.kcal);
+    _exerciseRepository
+        .createExercise(exercise)
+        .then((value) => emit(state.copyWith(status: CreationStatus.success)))
+        .catchError(
+            (err) => emit(state.copyWith(status: CreationStatus.error)));
   }
 }
