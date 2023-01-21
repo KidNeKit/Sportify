@@ -46,6 +46,29 @@ class ExerciseCreationScreen extends StatelessWidget {
                 ],
               ),
               Row(
+                children: [
+                  Text('Enter average ccal/hr',
+                      style: Theme.of(context).textTheme.labelLarge),
+                  Expanded(
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) => context
+                          .read<ExerciseCreationCubit>()
+                          .kcalChanged(value),
+                    ),
+                  ),
+                ],
+              ),
+              Text('Choose exercise measure type',
+                  style: Theme.of(context).textTheme.labelLarge),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Quantity'),
+                  Text('Distance'),
+                ],
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(

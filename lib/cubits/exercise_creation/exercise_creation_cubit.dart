@@ -27,6 +27,10 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
     emit(state.copyWith(pGroups: list));
   }
 
+  void kcalChanged(String kcal) {
+    emit(state.copyWith(kcal: double.tryParse(kcal)));
+  }
+
   void cancel() {
     emit(ExerciseCreationState.initial());
   }
@@ -35,8 +39,11 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
     emit(state.copyWith(status: CreationStatus.loading));
 
     try {
-      Exercise exercise =
-          Exercise(name: state.name, pGroups: state.pGroups, sGroups: []);
+      Exercise exercise = Exercise(
+          name: state.name,
+          pGroups: state.pGroups,
+          sGroups: [],
+          kcal: state.kcal);
       _exerciseRepository.createExercise(exercise);
       emit(state.copyWith(status: CreationStatus.success));
     } catch (e) {

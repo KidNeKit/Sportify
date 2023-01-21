@@ -9,14 +9,17 @@ class Exercise extends Equatable {
   final String _name;
   final List<MuscleGroups> _pGroups;
   final List<MuscleGroups>? _sGroups;
+  final double? _kcal;
 
   const Exercise(
       {required String name,
       required List<MuscleGroups> pGroups,
-      List<MuscleGroups>? sGroups})
+      List<MuscleGroups>? sGroups,
+      double? kcal})
       : _name = name,
         _pGroups = pGroups,
-        _sGroups = sGroups;
+        _sGroups = sGroups,
+        _kcal = kcal;
 
   String get name {
     return _name;
@@ -29,6 +32,7 @@ class Exercise extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'name': _name,
+      'kcal': _kcal,
       'pGroups': _pGroups.map((e) => e.toString()).toList(),
       'sGroups': _sGroups
     };
@@ -40,6 +44,9 @@ class Exercise extends Equatable {
         : [];
     return Exercise(
         name: snapshot['name'],
+        kcal: snapshot.data().toString().contains('kcal')
+            ? snapshot['kcal']
+            : null,
         pGroups: groups
             .map((e) => MuscleGroups.values.byName(e.toString()))
             .toList());
@@ -51,5 +58,5 @@ class Exercise extends Equatable {
   }
 
   @override
-  List<Object?> get props => [_name, _pGroups, _sGroups];
+  List<Object?> get props => [_name, _pGroups, _sGroups, _kcal];
 }

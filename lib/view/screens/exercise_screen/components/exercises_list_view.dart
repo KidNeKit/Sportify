@@ -32,9 +32,6 @@ class ExercisesListView extends StatelessWidget {
                 ),
               );
             }
-            if (state.filter == ExerciseFilter.custom) {
-              return Text('It is custom: ${state.exercises}');
-            }
             return ListView.separated(
               itemCount: state.exercises.length,
               itemBuilder: (ctx, index) => ExerciseItem(
