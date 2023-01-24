@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sportify/models/user.dart';
 
 class AuthRepository {
   final auth.FirebaseAuth _authRepository;
@@ -19,7 +21,7 @@ class AuthRepository {
       return user;
     } catch (e) {
       log('Error due user authorization: $e');
-      return null;
+      rethrow;
     }
   }
 
@@ -29,6 +31,13 @@ class AuthRepository {
       final credential = await _authRepository.createUserWithEmailAndPassword(
           email: email, password: password);
       final user = credential.user;
+
+      User myUser = User(id: user!.uid, email: user.email!);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .set(myUser.toMap());
+
       return user;
     } catch (e) {
       log('Error due user registration: $e');

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/cubits/login/login_cubit.dart';
 
+import '../cubits/login/login_cubit.dart';
 import '../cubits/registration/registration_cubit.dart';
 import '../repositories/auth_repository.dart';
+import '../view/screens/auth/login_screen.dart';
+import '../view/screens/auth/registration_screen.dart';
+import '../view/screens/exercise_creation_screen/exercise_creation_screen.dart';
+import '../view/screens/exercise_screen/exercise_screen.dart';
 import '../view/screens/home_screen.dart';
-import '../view/screens/login_screen.dart';
-import '../view/screens/registration_screen.dart';
 import '../view/screens/splash_screen.dart';
 
 class AppRouter {
@@ -30,6 +32,14 @@ class AppRouter {
                 ));
       case HomeScreen.routeName:
         return MaterialPageRoute(builder: (ctx) => const HomeScreen());
+      case ExerciseScreen.routeName:
+        return MaterialPageRoute(
+          builder: (ctx) => const ExerciseScreen(),
+        );
+      case ExerciseCreationScreen.routeName:
+        return MaterialPageRoute(
+          builder: (ctx) => ExerciseCreationScreen(),
+        );
       default:
         return null;
     }

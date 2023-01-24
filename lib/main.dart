@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/auth/auth_bloc.dart';
 import 'config/app_router.dart';
+import 'cubits/exercise_creation/exercise_creation_cubit.dart';
 import 'repositories/auth_repository.dart';
+import 'repositories/exercise_repository.dart';
+import 'utils/themes.dart';
 import 'view/screens/splash_screen.dart';
 
 void main() async {
@@ -20,13 +23,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (ctx) => AuthRepository(),
-      child: BlocProvider(
-        create: (ctx) => AuthBloc(authRepository: ctx.read<AuthRepository>()),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (ctx) => AuthRepository()),
+        RepositoryProvider(create: (ctx) => ExerciseRepository()),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (ctx) =>
+                AuthBloc(authRepository: ctx.read<AuthRepository>()),
+          ),
+          BlocProvider(
+            create: (ctx) => ExerciseCreationCubit(
+                exerciseRepository: ctx.read<ExerciseRepository>()),
+          ),
+        ],
         child: MaterialApp(
           onGenerateRoute: _appRouter.onGenerateRoute,
           initialRoute: SplashScreen.routeName,
+          theme: ThemeData(
+            inputDecorationTheme: tIntputDecorationTheme,
+            textTheme: tTextTheme,
+          ),
         ),
       ),
     );
