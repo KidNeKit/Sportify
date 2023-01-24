@@ -6,7 +6,9 @@ import '../../exercise_creation_screen/exercise_creation_screen.dart';
 import 'exercise_filter_item.dart';
 
 class ExercisesCatalogue extends StatelessWidget {
-  const ExercisesCatalogue({
+  final _serchController = TextEditingController();
+
+  ExercisesCatalogue({
     Key? key,
   }) : super(key: key);
 
@@ -44,10 +46,21 @@ class ExercisesCatalogue extends StatelessWidget {
                       .copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 10.0),
-                const TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Search',
-                    prefix: Icon(Icons.search),
+                BlocListener<ExerciseBloc, ExerciseState>(
+                  listenWhen: (previous, current) =>
+                      previous.filter != current.filter,
+                  listener: (context, state) {
+                    FocusScope.of(context).unfocus();
+                    _serchController.clear();
+                  },
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Search',
+                      prefix: Icon(Icons.search),
+                    ),
+                    controller: _serchController,
+                    onChanged: (value) =>
+                        context.read<ExerciseBloc>().add(GetBySearch(value)),
                   ),
                 ),
                 const SizedBox(height: 10.0),
@@ -58,22 +71,33 @@ class ExercisesCatalogue extends StatelessWidget {
                       ExerciseFilterItem(
                         isActive: state.filter == ExerciseFilter.all,
                         label: 'Default',
-                        filterFunc: () =>
-                            context.read<ExerciseBloc>().add(GetAllExercises()),
+                        filterFunc: () {
+                          if (state.filter != ExerciseFilter.all) {
+                            context.read<ExerciseBloc>().add(GetAllExercises());
+                          }
+                        },
                       ),
                       ExerciseFilterItem(
                         isActive: state.filter == ExerciseFilter.custom,
                         label: 'Custom',
-                        filterFunc: () => context
-                            .read<ExerciseBloc>()
-                            .add(GetCustomExercises()),
+                        filterFunc: () {
+                          if (state.filter != ExerciseFilter.custom) {
+                            context
+                                .read<ExerciseBloc>()
+                                .add(GetCustomExercises());
+                          }
+                        },
                       ),
                       ExerciseFilterItem(
                         isActive: state.filter == ExerciseFilter.bookmarks,
                         label: 'Bookmarks',
-                        filterFunc: () => context
-                            .read<ExerciseBloc>()
-                            .add(GetBookmarkedExercises()),
+                        filterFunc: () {
+                          if (state.filter != ExerciseFilter.bookmarks) {
+                            context
+                                .read<ExerciseBloc>()
+                                .add(GetBookmarkedExercises());
+                          }
+                        },
                       ),
                     ],
                   ),

@@ -22,9 +22,9 @@ class ExerciseScreen extends StatelessWidget {
             body: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              children: const [
+              children: [
                 ExercisesCatalogue(),
-                ExercisesListView(),
+                const ExercisesListView(),
               ],
             ),
           ),

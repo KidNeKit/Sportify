@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sportify/cubits/exercise_creation/exercise_creation_cubit.dart';
-import 'package:sportify/repositories/exercise_repository.dart';
 
 import '../../models/exercise.dart';
+import '../../repositories/exercise_repository.dart';
 
 part 'exercise_event.dart';
 part 'exercise_state.dart';
@@ -28,6 +27,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     on<GetAllExercises>(_getAllExercises);
     on<GetBookmarkedExercises>(_getBookmarkedExercises);
     on<GetCustomExercises>(_getCustomExercises);
+    on<GetBySearch>(_getBySearch);
 
     _defaultSubscription = _exerciseRepository.defaultExercises.listen((snap) {
       _defaultExercises = _defaultExercises ?? [];
@@ -106,6 +106,26 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       status: OperationStatus.successful,
       filter: ExerciseFilter.custom,
       exercises: _customExercises,
+    ));
+  }
+
+  void _getBySearch(GetBySearch event, Emitter<ExerciseState> emit) {
+    log('searching [${event.search}]...');
+    List<Exercise> foundExercises;
+    if (state.filter == ExerciseFilter.all) {
+      foundExercises = [..._defaultExercises!];
+    } else if (state.filter == ExerciseFilter.custom) {
+      foundExercises = [..._customExercises!];
+    } else {
+      foundExercises = [..._bookmarkedExercises!];
+    }
+
+    emit(state.copyWith(
+      status: OperationStatus.successful,
+      exercises: foundExercises
+          .where((element) =>
+              element.name.toLowerCase().contains(event.search.toLowerCase()))
+          .toList(),
     ));
   }
 
