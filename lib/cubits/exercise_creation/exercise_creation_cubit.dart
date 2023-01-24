@@ -21,7 +21,6 @@ class ExerciseCreationCubit extends Cubit<ExerciseCreationState> {
   }
 
   void nameChanged(String name) {
-    log(state.toString());
     emit(state.copyWith(name: name));
   }
 

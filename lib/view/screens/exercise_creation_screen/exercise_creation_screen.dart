@@ -109,7 +109,6 @@ class ExerciseCreationScreen extends StatelessWidget {
                   const SizedBox(width: 10.0),
                   BlocConsumer<ExerciseCreationCubit, ExerciseCreationState>(
                     listener: (context, state) {
-                      log('listener: ${state.status}');
                       if (state.status == CreationStatus.error) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('There is an error')));

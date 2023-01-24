@@ -37,6 +37,7 @@ class ExercisesListView extends StatelessWidget {
               itemBuilder: (ctx, index) => ExerciseItem(
                 name: state.exercises[index].name,
                 groups: state.exercises[index].pGroups,
+                kcal: state.exercises[index].kcal,
               ),
               separatorBuilder: (context, index) =>
                   const SizedBox(height: 10.0),
@@ -51,7 +52,9 @@ class ExercisesListView extends StatelessWidget {
 class ExerciseItem extends StatelessWidget {
   final String name;
   final List<MuscleGroups> groups;
-  const ExerciseItem({required this.name, required this.groups, super.key});
+  final double? kcal;
+  const ExerciseItem(
+      {required this.name, required this.groups, this.kcal, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,17 +74,34 @@ class ExerciseItem extends StatelessWidget {
         ),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Text(
-              name,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.white),
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  color: Colors.yellow,
+                ),
+                child: Text(
+                  kcal != null ? '$kcal' : '???',
+                  style: Theme.of(context).textTheme.labelSmall!,
+                ),
+              ),
+              Text(
+                name,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.white),
+              ),
+            ],
           ),
+          const Spacer(),
           LayoutBuilder(
             builder: (ctx, constraints) => ClipRRect(
               borderRadius: BorderRadius.circular(20.0),

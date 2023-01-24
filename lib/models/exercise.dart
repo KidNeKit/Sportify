@@ -33,6 +33,10 @@ class Exercise extends Equatable {
     return _pGroups;
   }
 
+  double? get kcal {
+    return _kcal;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': _name,
