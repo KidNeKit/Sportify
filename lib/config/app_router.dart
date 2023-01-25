@@ -9,6 +9,7 @@ import '../view/screens/auth/registration_screen.dart';
 import '../view/screens/exercise_creation_screen/exercise_creation_screen.dart';
 import '../view/screens/exercise_screen/exercise_screen.dart';
 import '../view/screens/home_screen.dart';
+import '../view/screens/navigation_screen/navigation_screen.dart';
 import '../view/screens/splash_screen.dart';
 
 class AppRouter {
@@ -16,6 +17,8 @@ class AppRouter {
     switch (settings.name) {
       case SplashScreen.routeName:
         return MaterialPageRoute(builder: (ctx) => const SplashScreen());
+      case NavigationScreen.routeName:
+        return MaterialPageRoute(builder: (ctx) => const NavigationScreen());
       case LoginScreen.routeName:
         return MaterialPageRoute(
             builder: (ctx) => BlocProvider(
