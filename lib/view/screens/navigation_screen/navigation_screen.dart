@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../exercise_screen/exercise_screen.dart';
-import 'components/navigation_bar.dart' as nav;
+import '../../../cubits/navigation/navigation_cubit.dart';
+import '../../../utils/navigation_data.dart';
+import 'components/navbar.dart';
 
 class NavigationScreen extends StatelessWidget {
   static const String routeName = '/navigation';
@@ -10,11 +12,15 @@ class NavigationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBody: true,
-      body: ExerciseScreen(),
-      bottomNavigationBar: nav.NavigationBar(),
+      body: BlocBuilder<NavigationCubit, NavigationState>(
+        builder: (context, state) {
+          return navPages[state.index];
+        },
+      ),
+      bottomNavigationBar: const NavBar(),
     );
   }
 }
