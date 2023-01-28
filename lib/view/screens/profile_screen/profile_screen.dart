@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportify/view/screens/profile_screen/components/body_info.dart';
 import 'package:sportify/view/screens/profile_screen/components/profile_header.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
     return Column(
       children: const [
         ProfileHeader(),
-        Text('End of header'),
+        BodyInfo(),
       ],
     );
   }
