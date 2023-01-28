@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/nav_icon.dart';
 import '../../view/screens/exercise_screen/exercise_screen.dart';
-import '../../view/screens/home_screen.dart';
+import '../../view/screens/home_screen/home_screen.dart';
 
 part 'navigation_state.dart';
 

@@ -8,7 +8,7 @@ import '../view/screens/auth/login_screen.dart';
 import '../view/screens/auth/registration_screen.dart';
 import '../view/screens/exercise_creation_screen/exercise_creation_screen.dart';
 import '../view/screens/exercise_screen/exercise_screen.dart';
-import '../view/screens/home_screen.dart';
+import '../view/screens/home_screen/home_screen.dart';
 import '../view/screens/navigation_screen/navigation_screen.dart';
 import '../view/screens/splash_screen.dart';
 

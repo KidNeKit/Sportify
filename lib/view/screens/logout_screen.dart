@@ -6,9 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import 'auth/login_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  static const String routeName = '/home';
-  const HomeScreen({super.key});
+class LogoutScreen extends StatelessWidget {
+  const LogoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

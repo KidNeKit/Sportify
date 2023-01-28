@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../blocs/auth/auth_bloc.dart';
 import '../../../cubits/login/login_cubit.dart';
 import '../../custom_widgets/input_fields/custom_text_field.dart';
-import '../home_screen.dart';
+import '../home_screen/home_screen.dart';
 import 'auth_background.dart';
 import 'registration_screen.dart';
 
