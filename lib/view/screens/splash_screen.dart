@@ -3,12 +3,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/repositories/auth_repository.dart';
-import 'package:sportify/repositories/exercise_repository.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
+import '../../repositories/exercise_repository.dart';
 import 'auth/login_screen.dart';
-import 'exercise_screen/exercise_screen.dart';
+import 'navigation_screen/navigation_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   static const String routeName = '/splash';
@@ -26,7 +25,7 @@ class SplashScreen extends StatelessWidget {
           const Duration(seconds: 1),
           () => Navigator.of(ctx).pushReplacementNamed(
               state.status == AuthStatus.authorized
-                  ? ExerciseScreen.routeName
+                  ? NavigationScreen.routeName
                   : LoginScreen.routeName),
         );
       },
