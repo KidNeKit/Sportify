@@ -6,10 +6,16 @@ import '../view/screens/home_screen.dart';
 
 const List<Widget> navPages = [
   HomeScreen(),
+  HomeScreen(),
+  HomeScreen(),
+  HomeScreen(),
   ExerciseScreen(),
 ];
 
 const List<NavIcon> navIcons = [
+  NavIcon(icon: Icons.home, label: 'Home'),
+  NavIcon(icon: Icons.home, label: 'Home'),
+  NavIcon(icon: Icons.home, label: 'Home'),
   NavIcon(icon: Icons.home, label: 'Home'),
   NavIcon(icon: Icons.search, label: 'Exercises'),
 ];

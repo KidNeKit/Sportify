@@ -10,14 +10,14 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.purple.withOpacity(0.5),
+        color: const Color(0XFF3C4048),
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ...List.generate(
             navIcons.length,

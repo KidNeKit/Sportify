@@ -22,13 +22,13 @@ class NavItem extends StatelessWidget {
       children: [
         BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) => AnimatedContainer(
-            width: state.index == _index ? 20.0 : 0.0,
+            width: state.index == _index ? 28.0 : 0.0,
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeIn,
             child: Container(
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey,
+                color: const Color(0xFF00ABB3),
                 borderRadius: BorderRadius.circular(20.0),
               ),
             ),
@@ -37,7 +37,11 @@ class NavItem extends StatelessWidget {
         const SizedBox(height: 5.0),
         GestureDetector(
             onTap: () => context.read<NavigationCubit>().changeScreen(_index),
-            child: Icon(_navIcon.icon)),
+            child: Icon(
+              _navIcon.icon,
+              size: 32,
+              color: const Color(0xFFB2B2B2),
+            )),
       ],
     );
   }
