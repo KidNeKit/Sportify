@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/cubits/user/user_cubit.dart';
 
 import 'blocs/auth/auth_bloc.dart';
 import 'config/app_router.dart';
 import 'cubits/exercise_creation/exercise_creation_cubit.dart';
 import 'cubits/navigation/navigation_cubit.dart';
+import 'cubits/registration/registration_cubit.dart';
 import 'repositories/auth_repository.dart';
 import 'repositories/exercise_repository.dart';
 import 'utils/themes.dart';
@@ -34,6 +36,14 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (ctx) =>
                 AuthBloc(authRepository: ctx.read<AuthRepository>()),
+          ),
+          BlocProvider(
+            create: (ctx) =>
+                UserCubit(authRepository: ctx.read<AuthRepository>()),
+          ),
+          BlocProvider(
+            create: (ctx) =>
+                RegistrationCubit(authRepository: ctx.read<AuthRepository>()),
           ),
           BlocProvider(
             create: (ctx) => NavigationCubit(),

@@ -26,13 +26,18 @@ class AuthRepository {
   }
 
   Future<auth.User?> signUp(
-      {required String email, required String password}) async {
+      {required User newUser, required String password}) async {
     try {
       final credential = await _authRepository.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: newUser.email, password: password);
       final user = credential.user;
 
-      User myUser = User(id: user!.uid, email: user.email!);
+      User myUser = User(
+          id: user!.uid,
+          email: user.email!,
+          username: newUser.username,
+          height: newUser.height,
+          weight: newUser.weight);
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
