@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/cubits/user/user_cubit.dart';
+import 'package:sportify/view/screens/onboarding_screen/onboarding_screen.dart';
 
 import '../../../blocs/auth/auth_bloc.dart';
 import '../../../cubits/registration/registration_cubit.dart';
@@ -35,7 +37,7 @@ class RegistrationScreen extends StatelessWidget {
                       labelText: 'Email',
                     ),
                     onChanged: (value) {
-                      context.read<RegistrationCubit>().emailChanged(value);
+                      context.read<UserCubit>().changeEmail(value);
                     },
                   ),
                   const SizedBox(height: 10),
@@ -44,13 +46,15 @@ class RegistrationScreen extends StatelessWidget {
                       labelText: 'Password',
                     ),
                     onChanged: (value) {
-                      context.read<RegistrationCubit>().passwordChanged(value);
+                      context.read<UserCubit>().changePassword(value);
                     },
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
-                      context.read<RegistrationCubit>().signup();
+                      //context.read<RegistrationCubit>().signup();
+                      Navigator.of(context)
+                          .pushNamed(OnboardingScreen.routeName);
                     },
                     child: const Text('Signup'),
                   ),
