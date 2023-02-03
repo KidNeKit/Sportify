@@ -57,4 +57,16 @@ class AuthRepository {
       log('Error due log out: $e');
     }
   }
+
+  Future<User?> getCurrentUser() async {
+    try {
+      String uid = _authRepository.currentUser!.uid;
+      final snapshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      return User.fromMap(snapshot.data() as Map<String, dynamic>);
+    } catch (e) {
+      log('Error during getting user info: $e');
+    }
+    return null;
+  }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/cubits/user/user_cubit.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -54,12 +56,18 @@ class ProfileHeader extends StatelessWidget {
                     2 * imgWrapperRadius +
                     0.01 * headerWidth) - //margin left to username
                 0.02 * headerWidth, // margin right
-            child: Text(
-              'Username',
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis),
+            child: BlocBuilder<UserCubit, UserState>(
+              buildWhen: (previous, current) =>
+                  previous.username != current.username,
+              builder: (context, state) {
+                return Text(
+                  state.username,
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis),
+                );
+              },
             ),
           ),
         ),

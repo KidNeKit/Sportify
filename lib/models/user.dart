@@ -28,6 +28,13 @@ class User {
         _weight = weight,
         _height = height;
 
+  User.fromMap(Map<String, dynamic> map)
+      : _id = map['id'],
+        _email = map['email'],
+        _username = map['username'],
+        _height = map['height'],
+        _weight = map['weight'];
+
   String? get id => _id;
   String get email => _email;
   String get username => _username;

@@ -45,4 +45,14 @@ class UserCubit extends Cubit<UserState> {
       emit(state.copyWith(status: UserStatus.success));
     } catch (_) {}
   }
+
+  void loadUserData() async {
+    User? user = await _authRepository.getCurrentUser();
+    emit(state.copyWith(
+        id: user!.id,
+        email: user.email,
+        username: user.username,
+        height: user.height,
+        weigth: user.weight));
+  }
 }
