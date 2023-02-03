@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sportify/view/screens/profile_screen/components/body_info.dart';
-import 'package:sportify/view/screens/profile_screen/components/profile_header.dart';
+
+import 'components/body_info.dart';
+import 'components/profile_header.dart';
+import 'components/weighing.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -11,6 +13,7 @@ class ProfileScreen extends StatelessWidget {
       children: const [
         ProfileHeader(),
         BodyInfo(),
+        Weighing(),
       ],
     );
   }
