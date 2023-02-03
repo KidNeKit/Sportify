@@ -3,10 +3,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/cubits/user/user_cubit.dart';
 
 import '../../blocs/auth/auth_bloc.dart';
+import '../../cubits/user/user_cubit.dart';
 import '../../repositories/exercise_repository.dart';
+import '../../repositories/workout_template_repository.dart';
 import 'auth/login_screen.dart';
 import 'navigation_screen/navigation_screen.dart';
 
@@ -21,6 +22,7 @@ class SplashScreen extends StatelessWidget {
         log('{Splash Screen} Auth state ${state.toString()}');
         if (state.status == AuthStatus.authorized) {
           context.read<ExerciseRepository>().setUserId = state.user!.uid;
+          context.read<WorkoutTemplateRepository>().setUserId = state.user!.uid;
           context.read<UserCubit>().loadUserData();
         }
         Timer(

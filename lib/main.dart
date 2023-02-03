@@ -1,15 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/cubits/user/user_cubit.dart';
 
 import 'blocs/auth/auth_bloc.dart';
 import 'config/app_router.dart';
 import 'cubits/exercise_creation/exercise_creation_cubit.dart';
 import 'cubits/navigation/navigation_cubit.dart';
 import 'cubits/registration/registration_cubit.dart';
+import 'cubits/user/user_cubit.dart';
+import 'cubits/workout_creation/workout_creation_cubit.dart';
 import 'repositories/auth_repository.dart';
 import 'repositories/exercise_repository.dart';
+import 'repositories/workout_template_repository.dart';
 import 'utils/themes.dart';
 import 'view/screens/splash_screen.dart';
 
@@ -30,6 +32,7 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider(create: (ctx) => AuthRepository()),
         RepositoryProvider(create: (ctx) => ExerciseRepository()),
+        RepositoryProvider(create: (ctx) => WorkoutTemplateRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -51,6 +54,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (ctx) => ExerciseCreationCubit(
                 exerciseRepository: ctx.read<ExerciseRepository>()),
+          ),
+          BlocProvider(
+            create: (ctx) => WorkoutCreationCubit(
+                workoutTemplateRepository:
+                    ctx.read<WorkoutTemplateRepository>()),
           ),
         ],
         child: MaterialApp(
