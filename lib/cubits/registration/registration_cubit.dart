@@ -11,7 +11,9 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   final AuthRepository _authRepository;
   RegistrationCubit({required AuthRepository authRepository})
       : _authRepository = authRepository,
-        super(const RegistrationState.initial());
+        super(const RegistrationState.initial()) {
+    log('registration cubit created');
+  }
 
   void emailChanged(String email) {
     emit(state.copyWith(email: email));
@@ -26,9 +28,10 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   void signup() async {
     try {
       emit(state.copyWith(status: RegistrationStatus.processing));
-      await _authRepository.signUp(
-          email: state.email, password: state.password);
-      emit(state.copyWith(status: RegistrationStatus.success));
+      // await _authRepository.signUp(
+      //     email: state.email, password: state.password);
+      // emit(state.copyWith(status: RegistrationStatus.success));
+      emit(state.copyWith(status: RegistrationStatus.initial));
     } catch (_) {}
   }
 }
