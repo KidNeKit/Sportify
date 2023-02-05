@@ -7,11 +7,13 @@ abstract class ExerciseEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllExercises extends ExerciseEvent {}
+class GetDefaultExercises extends ExerciseEvent {}
 
 class GetCustomExercises extends ExerciseEvent {}
 
 class GetBookmarkedExercises extends ExerciseEvent {}
+
+class GetAllExercises extends ExerciseEvent {}
 
 class GetBySearch extends ExerciseEvent {
   final String search;

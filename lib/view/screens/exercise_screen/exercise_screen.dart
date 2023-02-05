@@ -16,7 +16,7 @@ class ExerciseScreen extends StatelessWidget {
     return BlocProvider<ExerciseBloc>(
         create: (ctx) =>
             ExerciseBloc(exerciseRepository: ctx.read<ExerciseRepository>())
-              ..add(GetAllExercises()),
+              ..add(GetDefaultExercises()),
         child: SafeArea(
           child: Scaffold(
             body: Column(

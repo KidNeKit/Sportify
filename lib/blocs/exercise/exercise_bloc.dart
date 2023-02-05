@@ -24,7 +24,9 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   ExerciseBloc({required ExerciseRepository exerciseRepository})
       : _exerciseRepository = exerciseRepository,
         super(ExerciseState.initial()) {
+    log('created exercise bloc: $_defaultExercises');
     on<GetAllExercises>(_getAllExercises);
+    on<GetDefaultExercises>(_getDefaultExercises);
     on<GetBookmarkedExercises>(_getBookmarkedExercises);
     on<GetCustomExercises>(_getCustomExercises);
     on<GetBySearch>(_getBySearch);
@@ -34,7 +36,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       snap.docChanges
           .map((element) => Exercise.fromFirestore(element.doc))
           .forEach((element) => _defaultExercises!.add(element));
-      add(GetAllExercises());
+      add(GetDefaultExercises());
     });
 
     _customSubscription = _exerciseRepository.customExercises.listen((snap) {
@@ -42,7 +44,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       snap.docChanges
           .map((element) => Exercise.fromFirestore(element.doc))
           .forEach((element) => _customExercises!.add(element));
-      add(GetAllExercises());
+      add(GetDefaultExercises());
     });
 
     _bookmarksSubscription =
@@ -51,26 +53,37 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
       snap.docChanges
           .map((element) => Exercise.fromFirestore(element.doc))
           .forEach((element) => _bookmarkedExercises!.add(element));
-      add(GetAllExercises());
+      add(GetDefaultExercises());
     });
   }
 
-  void _getAllExercises(
-      GetAllExercises event, Emitter<ExerciseState> emit) async {
+  void _getDefaultExercises(
+      GetDefaultExercises event, Emitter<ExerciseState> emit) async {
     log('get all event');
 
     if (_defaultExercises == null) {
       emit(state.copyWith(
         status: OperationStatus.loading,
-        filter: ExerciseFilter.all,
+        filter: ExerciseFilter.def,
       ));
       return;
     }
     emit(state.copyWith(
       status: OperationStatus.successful,
-      filter: ExerciseFilter.all,
+      filter: ExerciseFilter.def,
       exercises: _defaultExercises,
     ));
+  }
+
+  void _getAllExercises(
+      GetAllExercises event, Emitter<ExerciseState> emit) async {
+    // emit(state.copyWith(
+    //   status: OperationStatus.successful,
+    //   filter: ExerciseFilter.bookmarks,
+    //   exercises: _defaultExercises!
+    //     ..addAll(_customExercises!)
+    //     ..addAll(_bookmarkedExercises!),
+    // ));
   }
 
   void _getBookmarkedExercises(
@@ -112,7 +125,7 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   void _getBySearch(GetBySearch event, Emitter<ExerciseState> emit) {
     log('searching [${event.search}]...');
     List<Exercise> foundExercises;
-    if (state.filter == ExerciseFilter.all) {
+    if (state.filter == ExerciseFilter.def) {
       foundExercises = [..._defaultExercises!];
     } else if (state.filter == ExerciseFilter.custom) {
       foundExercises = [..._customExercises!];

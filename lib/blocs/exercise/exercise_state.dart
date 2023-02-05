@@ -1,6 +1,6 @@
 part of 'exercise_bloc.dart';
 
-enum ExerciseFilter { all, custom, bookmarks }
+enum ExerciseFilter { all, def, custom, bookmarks }
 
 enum OperationStatus { loading, successful, failed }
 
@@ -12,7 +12,7 @@ class ExerciseState extends Equatable {
 
   ExerciseState.initial()
       : status = OperationStatus.loading,
-        filter = ExerciseFilter.all,
+        filter = ExerciseFilter.def,
         exercises = [],
         search = '';
 
