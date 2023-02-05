@@ -32,39 +32,39 @@ class ExerciseRepository {
           .collection('bookmarkedExercises')
           .snapshots();
 
-  // Future<List<Exercise>> fetchExercises() async {
-  //   QuerySnapshot query = await _firestore.collection(exercisePath).get();
+  Future<List<Exercise>> fetchExercises() async {
+    QuerySnapshot query = await _firestore.collection(exercisePath).get();
 
-  //   List<Exercise> exerciseList =
-  //       query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
+    List<Exercise> exerciseList =
+        query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
 
-  //   return exerciseList;
-  // }
+    return exerciseList;
+  }
 
-  // Future<List<Exercise>> fetchCustomExercises() async {
-  //   QuerySnapshot query = await _firestore
-  //       .collection('users')
-  //       .doc(_userId)
-  //       .collection('customExercises')
-  //       .get();
+  Future<List<Exercise>> fetchCustomExercises() async {
+    QuerySnapshot query = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('customExercises')
+        .get();
 
-  //   List<Exercise> exerciseList =
-  //       query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
+    List<Exercise> exerciseList =
+        query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
 
-  //   return exerciseList;
-  // }
+    return exerciseList;
+  }
 
-  // Future<List<Exercise>> fetchBookmarkedExercises() async {
-  //   QuerySnapshot query = await _firestore
-  //       .collection('users')
-  //       .doc(_userId)
-  //       .collection('bookmarkedExercises')
-  //       .get();
-  //   List<Exercise> exerciseList =
-  //       query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
+  Future<List<Exercise>> fetchBookmarkedExercises() async {
+    QuerySnapshot query = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('bookmarkedExercises')
+        .get();
+    List<Exercise> exerciseList =
+        query.docs.map((doc) => Exercise.fromFirestore(doc)).toList();
 
-  //   return exerciseList;
-  // }
+    return exerciseList;
+  }
 
   Future<void> createExercise(Exercise exercise) async {
     await _firestore

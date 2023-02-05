@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../blocs/exercise/exercise_bloc.dart';
+import '../../../../cubits/exercise/exercise_cubit.dart';
+import '../../../../models/enums/exercise_filter.dart';
 import '../../exercise_creation_screen/exercise_creation_screen.dart';
 import 'exercise_filter_item.dart';
 
@@ -46,8 +47,10 @@ class ExercisesCatalogue extends StatelessWidget {
                       .copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 10.0),
-                BlocListener<ExerciseBloc, ExerciseState>(
+                BlocListener<ExerciseCubit, ExerciseState>(
                   listenWhen: (previous, current) =>
+                      previous is ExerciseBySearchState &&
+                      current is ExerciseBySearchState &&
                       previous.filter != current.filter,
                   listener: (context, state) {
                     FocusScope.of(context).unfocus();
@@ -59,51 +62,59 @@ class ExercisesCatalogue extends StatelessWidget {
                       prefix: Icon(Icons.search),
                     ),
                     controller: _serchController,
-                    onChanged: (value) =>
-                        context.read<ExerciseBloc>().add(GetBySearch(value)),
+                    onChanged: (value) => context
+                        .read<ExerciseCubit>()
+                        .getExercisesBySearch(value),
                   ),
                 ),
                 const SizedBox(height: 10.0),
-                BlocBuilder<ExerciseBloc, ExerciseState>(
-                  builder: (context, state) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ExerciseFilterItem(
-                        isActive: state.filter == ExerciseFilter.def,
-                        label: 'Default',
-                        filterFunc: () {
-                          if (state.filter != ExerciseFilter.def) {
-                            context
-                                .read<ExerciseBloc>()
-                                .add(GetDefaultExercises());
-                          }
-                        },
-                      ),
-                      ExerciseFilterItem(
-                        isActive: state.filter == ExerciseFilter.custom,
-                        label: 'Custom',
-                        filterFunc: () {
-                          if (state.filter != ExerciseFilter.custom) {
-                            context
-                                .read<ExerciseBloc>()
-                                .add(GetCustomExercises());
-                          }
-                        },
-                      ),
-                      ExerciseFilterItem(
-                        isActive: state.filter == ExerciseFilter.bookmarks,
-                        label: 'Bookmarks',
-                        filterFunc: () {
-                          if (state.filter != ExerciseFilter.bookmarks) {
-                            context
-                                .read<ExerciseBloc>()
-                                .add(GetBookmarkedExercises());
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                BlocBuilder<ExerciseCubit, ExerciseState>(
+                    builder: (context, state) {
+                  if (state is ExerciseErrorState) {
+                    return const Text('There was an error');
+                  } else if (state is ExerciseBySearchState ||
+                      state is ExerciseLoadingState) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ExerciseFilterItem(
+                          isActive: state.filter == ExerciseFilter.def,
+                          label: 'Default',
+                          filterFunc: () {
+                            if (state.filter != ExerciseFilter.def) {
+                              context
+                                  .read<ExerciseCubit>()
+                                  .getDefaultExercises();
+                            }
+                          },
+                        ),
+                        ExerciseFilterItem(
+                          isActive: state.filter == ExerciseFilter.custom,
+                          label: 'Custom',
+                          filterFunc: () {
+                            if (state.filter != ExerciseFilter.custom) {
+                              context
+                                  .read<ExerciseCubit>()
+                                  .getCustomExercises();
+                            }
+                          },
+                        ),
+                        ExerciseFilterItem(
+                          isActive: state.filter == ExerciseFilter.bookmarks,
+                          label: 'Bookmarks',
+                          filterFunc: () {
+                            if (state.filter != ExerciseFilter.bookmarks) {
+                              context
+                                  .read<ExerciseCubit>()
+                                  .getBookmarkedExercises();
+                            }
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                  return Container();
+                }),
               ],
             ),
           ),

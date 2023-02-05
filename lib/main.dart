@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/auth/auth_bloc.dart';
 import 'config/app_router.dart';
+import 'cubits/exercise/exercise_cubit.dart';
 import 'cubits/exercise_creation/exercise_creation_cubit.dart';
 import 'cubits/navigation/navigation_cubit.dart';
 import 'cubits/registration/registration_cubit.dart';
@@ -50,6 +51,10 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (ctx) => NavigationCubit(),
+          ),
+          BlocProvider(
+            create: (ctx) => ExerciseCubit(
+                exerciseRepository: ctx.read<ExerciseRepository>()),
           ),
           BlocProvider(
             create: (ctx) => ExerciseCreationCubit(

@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/models/enums/muscle_groups.dart';
 
-import '../../../../blocs/exercise/exercise_bloc.dart';
+import '../../../../cubits/exercise/exercise_cubit.dart';
+import '../../../../models/enums/muscle_groups.dart';
 
 class ExercisesListView extends StatelessWidget {
   const ExercisesListView({super.key});
@@ -14,34 +12,46 @@ class ExercisesListView extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: BlocBuilder<ExerciseBloc, ExerciseState>(
+        child: BlocBuilder<ExerciseCubit, ExerciseState>(
           builder: (ctx, state) {
-            if (state.status == OperationStatus.loading) {
+            if (state is ExerciseLoadingState) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            if (state.exercises.isEmpty) {
+            } else if (state is ExerciseBySearchState) {
+              if (state.exercises.isEmpty) {
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: const Center(
+                    child: Text('There is no exercises'),
+                  ),
+                );
+              }
+              return ListView.separated(
+                itemCount: state.exercises.length,
+                itemBuilder: (ctx, index) => ExerciseItem(
+                  name: state.exercises[index].name,
+                  groups: state.exercises[index].pGroups,
+                  kcal: state.exercises[index].kcal,
+                ),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 10.0),
+              );
+            } else {
               return Container(
                 decoration: BoxDecoration(
                   border: Border.all(),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: const Center(
-                  child: Text('There is no exercises'),
+                child: Center(
+                  child: Text(
+                      'There is an error during loading exercises: ${(state as ExerciseErrorState).message}'),
                 ),
               );
             }
-            return ListView.separated(
-              itemCount: state.exercises.length,
-              itemBuilder: (ctx, index) => ExerciseItem(
-                name: state.exercises[index].name,
-                groups: state.exercises[index].pGroups,
-                kcal: state.exercises[index].kcal,
-              ),
-              separatorBuilder: (context, index) =>
-                  const SizedBox(height: 10.0),
-            );
           },
         ),
       ),
