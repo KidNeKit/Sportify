@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +22,7 @@ class ExerciseScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             ExercisesCatalogue(),
-            const ExercisesListView(),
+            ExercisesListView(),
           ],
         ),
       ),

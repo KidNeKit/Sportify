@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,7 +7,13 @@ import '../../../../cubits/exercise/exercise_cubit.dart';
 import '../../../../models/enums/muscle_groups.dart';
 
 class ExercisesListView extends StatelessWidget {
-  const ExercisesListView({super.key});
+  final Function _itemTapFunc;
+
+  ExercisesListView({Function? itemTapFunc, super.key})
+      : _itemTapFunc = itemTapFunc ??
+            ((exercise) {
+              log('default tap');
+            });
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +40,13 @@ class ExercisesListView extends StatelessWidget {
               }
               return ListView.separated(
                 itemCount: state.exercises.length,
-                itemBuilder: (ctx, index) => ExerciseItem(
-                  name: state.exercises[index].name,
-                  groups: state.exercises[index].pGroups,
-                  kcal: state.exercises[index].kcal,
+                itemBuilder: (ctx, index) => GestureDetector(
+                  onTap: () => _itemTapFunc(state.exercises[index]),
+                  child: ExerciseItem(
+                    name: state.exercises[index].name,
+                    groups: state.exercises[index].pGroups,
+                    kcal: state.exercises[index].kcal,
+                  ),
                 ),
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 10.0),
