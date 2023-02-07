@@ -24,4 +24,18 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
   void prevStep() {
     emit(state.copyWith(stepNumber: state.stepNumber - 1));
   }
+
+  void expandExercise(String exerciseId) {
+    List<ExerciseTemplate> templates = [...state.templates];
+    ExerciseTemplate template = templates
+        .map((e) => ExerciseTemplate.clone(exerciseTemplate: e))
+        .firstWhere((element) => element.exerciseId == exerciseId)
+      ..changeExpandValue();
+
+    int index =
+        templates.indexWhere((element) => element.exerciseId == exerciseId);
+    templates[index] = template;
+
+    emit(state.copyWith(templates: templates));
+  }
 }

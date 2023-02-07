@@ -19,5 +19,5 @@ class ExerciseTemplateState extends Equatable {
   }
 
   @override
-  List<Object> get props => [templates, stepNumber];
+  List<Object> get props => [templates.toString(), stepNumber];
 }
