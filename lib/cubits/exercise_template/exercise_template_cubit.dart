@@ -25,6 +25,10 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
     emit(state.copyWith(stepNumber: state.stepNumber - 1));
   }
 
+  void switchSelectorOption() {
+    emit(state.copyWith(showSelected: !state.showSelected));
+  }
+
   void expandExercise(String exerciseId) {
     List<ExerciseTemplate> templates = [...state.templates];
     ExerciseTemplate template = templates

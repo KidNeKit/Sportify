@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sportify/view/screens/workout_template_creation_screen/components/part_nav_buttons.dart';
+import 'package:sportify/view/screens/workout_template_creation_screen/exercise_selection_part/exercise_selector.dart';
 
 import '../../../../cubits/exercise_template/exercise_template_cubit.dart';
 import '../../../../models/exercise_template.dart';
@@ -27,17 +28,18 @@ class ExerciseSelection extends StatelessWidget {
             ),
             const SizedBox(height: 10.0),
             const TextField(),
-            BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
-              builder: (context, state) {
-                return ExercisesListView(
-                  itemTapFunc: (exercise) {
-                    context.read<ExerciseTemplateCubit>().addExerciseTemplate(
-                        ExerciseTemplate.fromExercise(exercise: exercise));
-                    log('tap in creation: $exercise');
-                  },
-                );
-              },
-            ),
+            const ExerciseSelector(),
+            // BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
+            //   builder: (context, state) {
+            //     return ExercisesListView(
+            //       itemTapFunc: (exercise) {
+            //         context.read<ExerciseTemplateCubit>().addExerciseTemplate(
+            //             ExerciseTemplate.fromExercise(exercise: exercise));
+            //         log('tap in creation: $exercise');
+            //       },
+            //     );
+            //   },
+            // ),
             const OptionSelector(),
             const SizedBox(height: 10.0),
             const PartNavButtons(),

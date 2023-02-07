@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../cubits/exercise_template/exercise_template_cubit.dart';
 
 class Option extends StatelessWidget {
   final String _label;
@@ -21,6 +24,7 @@ class Option extends StatelessWidget {
         onTap: () {
           if (!_isActive) {
             _onSelectOptionFunc();
+            context.read<ExerciseTemplateCubit>().switchSelectorOption();
           }
         },
         child: Center(
