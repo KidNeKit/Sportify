@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sportify/view/screens/workout_template_creation_screen/components/part_nav_buttons.dart';
+import 'package:sportify/view/screens/workout_template_creation_screen/exercise_selection_part/exercise_search_field.dart';
 import 'package:sportify/view/screens/workout_template_creation_screen/exercise_selection_part/exercise_selector.dart';
 
 import '../../../../cubits/exercise_template/exercise_template_cubit.dart';
@@ -27,7 +28,7 @@ class ExerciseSelection extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 10.0),
-            const TextField(),
+            ExerciseSearchField(),
             const ExerciseSelector(),
             // BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
             //   builder: (context, state) {

@@ -10,9 +10,14 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
   ExerciseTemplateCubit() : super(ExerciseTemplateState.initial());
 
   void addExerciseTemplate(ExerciseTemplate exerciseTemplate) {
-    log(state.templates.toString());
-    emit(state.copyWith(
-        templates: List.from(state.templates)..add(exerciseTemplate)));
+    int index = state.templates
+        .indexWhere((element) => element.exercise == exerciseTemplate.exercise);
+
+    if (index != -1) {
+      emit(state.copyWith(templates: [...state.templates]..removeAt(index)));
+      return;
+    }
+    emit(state.copyWith(templates: [...state.templates, exerciseTemplate]));
   }
 
   void removeExerciseTemplate(ExerciseTemplate exerciseTemplate) {}

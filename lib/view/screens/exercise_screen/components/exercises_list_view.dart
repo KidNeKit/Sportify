@@ -74,72 +74,80 @@ class ExerciseItem extends StatelessWidget {
   final String name;
   final List<MuscleGroups> groups;
   final double? kcal;
+  final bool isSelected;
   const ExerciseItem(
-      {required this.name, required this.groups, this.kcal, super.key});
+      {required this.name,
+      required this.groups,
+      this.kcal,
+      this.isSelected = false,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100.0,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(),
-        image: DecorationImage(
-          image: const NetworkImage(
-              'https://blog.nasm.org/hubfs/power-pushups.jpg'),
-          fit: BoxFit.cover,
-          colorFilter:
-              ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.darken),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  color: Colors.yellow,
-                ),
-                child: Text(
-                  kcal != null ? '$kcal' : '???',
-                  style: Theme.of(context).textTheme.labelSmall!,
-                ),
-              ),
-              Text(
-                name,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Colors.white),
-              ),
-            ],
+    return Opacity(
+      opacity: isSelected ? 0.7 : 1.0,
+      child: Container(
+        height: 100.0,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(),
+          image: DecorationImage(
+            image: const NetworkImage(
+                'https://blog.nasm.org/hubfs/power-pushups.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.7), BlendMode.darken),
           ),
-          const Spacer(),
-          LayoutBuilder(
-            builder: (ctx, constraints) => ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Column(
-                children: [
-                  ...groups
-                      .map((group) => Container(
-                            height: constraints.maxHeight / groups.length,
-                            width: 4.0,
-                            color: group.color,
-                          ))
-                      .toList(),
-                ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: Colors.yellow,
+                  ),
+                  child: Text(
+                    kcal != null ? '$kcal' : '???',
+                    style: Theme.of(context).textTheme.labelSmall!,
+                  ),
+                ),
+                Text(
+                  name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .copyWith(color: Colors.white),
+                ),
+              ],
+            ),
+            const Spacer(),
+            LayoutBuilder(
+              builder: (ctx, constraints) => ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Column(
+                  children: [
+                    ...groups
+                        .map((group) => Container(
+                              height: constraints.maxHeight / groups.length,
+                              width: 4.0,
+                              color: group.color,
+                            ))
+                        .toList(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

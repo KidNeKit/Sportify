@@ -23,11 +23,21 @@ class PartNavButtons extends StatelessWidget {
           ),
           const SizedBox(width: 15.0),
           NavButton(
-            label: 'Next',
-            buttonType: NavButtonType.forward,
-            onPressedFunc: () =>
-                context.read<ExerciseTemplateCubit>().nextStep(),
-          ),
+              label: 'Next',
+              buttonType: NavButtonType.forward,
+              onPressedFunc: () {
+                if (context
+                    .read<ExerciseTemplateCubit>()
+                    .state
+                    .templates
+                    .isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      duration: Duration(seconds: 1),
+                      content: Text('Please select at least one exercise')));
+                  return;
+                }
+                context.read<ExerciseTemplateCubit>().nextStep();
+              }),
         ],
       ),
     );
