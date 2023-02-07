@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/view/screens/workout_template_creation_screen/components/part_nav_buttons.dart';
 
 import '../../../../cubits/exercise_template/exercise_template_cubit.dart';
 import '../../../../models/exercise_template.dart';
@@ -18,10 +19,13 @@ class ExerciseSelection extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('Select exercises'),
-            const OptionSelector(),
+            Text(
+              'Select exercises',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 10.0),
             const TextField(),
             BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
               builder: (context, state) {
@@ -34,21 +38,9 @@ class ExerciseSelection extends StatelessWidget {
                 );
               },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Cancel')),
-                ElevatedButton(
-                    onPressed: () {
-                      context.read<ExerciseTemplateCubit>().nextStep();
-                    },
-                    child: const Text('Continue')),
-              ],
-            ),
+            const OptionSelector(),
+            const SizedBox(height: 10.0),
+            const PartNavButtons(),
           ],
         ),
       ),

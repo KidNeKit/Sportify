@@ -28,7 +28,7 @@ class Option extends StatelessWidget {
             _label,
             style: Theme.of(context)
                 .textTheme
-                .labelLarge!
+                .labelMedium!
                 .copyWith(color: _isActive ? Colors.white : Colors.black),
           ),
         ),

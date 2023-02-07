@@ -1,0 +1,4 @@
+enum NavButtonType {
+  back,
+  forward;
+}
