@@ -1,15 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/cubits/exercise/exercise_cubit.dart';
-import 'package:sportify/models/exercise_template.dart';
 
+import '../../../cubits/exercise/exercise_cubit.dart';
 import '../../../cubits/exercise_template/exercise_template_cubit.dart';
-import '../exercise_screen/components/exercises_list_view.dart';
+import 'components/exercise_selection.dart';
+import 'components/rep_config.dart';
 
 class WorkoutTemplateCreationScreen extends StatelessWidget {
   static const String routeName = '/workoutTemplateCreation';
+
+  static const List<Widget> _creationSteps = [ExerciseSelection(), RepConfig()];
 
   const WorkoutTemplateCreationScreen({super.key});
 
@@ -18,36 +18,14 @@ class WorkoutTemplateCreationScreen extends StatelessWidget {
     context.read<ExerciseCubit>().getAllExercises();
     return BlocProvider(
       create: (context) => ExerciseTemplateCubit(),
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Select exercises'),
-            BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
-              builder: (context, state) {
-                return ExercisesListView(
-                  itemTapFunc: (exercise) {
-                    context.read<ExerciseTemplateCubit>().addExerciseTemplate(
-                        ExerciseTemplate.fromExercise(exercise: exercise));
-                    log('tap in creation: $exercise');
-                  },
-                );
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Cancel')),
-                ElevatedButton(onPressed: () {}, child: const Text('Continue')),
-              ],
-            ),
-          ],
-        ),
+      child: BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
+        buildWhen: (previous, current) =>
+            previous.stepNumber != current.stepNumber,
+        builder: (context, state) {
+          return Scaffold(
+            body: _creationSteps[state.stepNumber],
+          );
+        },
       ),
     );
   }
