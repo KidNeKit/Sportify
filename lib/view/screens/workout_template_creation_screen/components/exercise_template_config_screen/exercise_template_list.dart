@@ -15,7 +15,7 @@ class ExerciseTemplateList extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
             buildWhen: (previous, current) =>
-                previous.templates != current.templates,
+                previous.stepNumber != current.stepNumber,
             builder: (ctx, state) {
               return ListView.separated(
                 itemCount: state.templates.length,

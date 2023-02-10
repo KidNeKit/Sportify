@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:sportify/models/exercise.dart';
+import 'package:sportify/models/exercise_rep.dart';
 import 'package:sportify/models/exercise_template.dart';
+import 'package:sportify/view/screens/exercise_creation_screen/exercise_creation_screen.dart';
 
 part 'exercise_template_state.dart';
 
@@ -32,6 +35,20 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
 
   void switchSelectorOption() {
     emit(state.copyWith(showSelected: !state.showSelected));
+  }
+
+  void addRepToTemplate(ExerciseTemplate template) {
+    int index = state.templates.indexOf(template);
+
+    ExerciseTemplate sourceTemplate = state.templates[index];
+    ExerciseTemplate copy =
+        ExerciseTemplate.clone(exerciseTemplate: sourceTemplate);
+    copy = copy.copyWith(reps: [...copy.reps, ExerciseRep(name: 'Skib')]);
+
+    List<ExerciseTemplate> newList = [...state.templates];
+    newList[index] = copy;
+
+    emit(state.copyWith(templates: newList));
   }
 
   void expandExercise(String exerciseId) {

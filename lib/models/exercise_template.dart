@@ -29,7 +29,7 @@ class ExerciseTemplate extends Equatable {
         _restSec = 0;
 
   ExerciseTemplate.clone({required ExerciseTemplate exerciseTemplate})
-      : _exercise = exerciseTemplate._exercise,
+      : _exercise = Exercise.clone(exerciseTemplate._exercise),
         _isCustom = exerciseTemplate._isCustom,
         _isExpanded = exerciseTemplate._isExpanded,
         _reps = exerciseTemplate._reps,
@@ -44,6 +44,18 @@ class ExerciseTemplate extends Equatable {
 
   void changeExpandValue() {
     _isExpanded = !_isExpanded;
+  }
+
+  ExerciseTemplate copyWith(
+      {Exercise? exercise,
+      bool? isCustom,
+      int? restSec,
+      List<ExerciseRep>? reps}) {
+    return ExerciseTemplate(
+        exercise: exercise ?? _exercise,
+        isCustom: isCustom ?? _isCustom,
+        restSec: restSec ?? _restSec,
+        reps: reps ?? _reps);
   }
 
   Map<String, dynamic> toMap() {

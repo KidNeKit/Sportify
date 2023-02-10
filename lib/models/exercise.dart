@@ -25,6 +25,13 @@ class Exercise extends Equatable {
         _sGroups = sGroups,
         _kcal = kcal;
 
+  Exercise.clone(Exercise exercise)
+      : _name = exercise._name,
+        _measure = exercise._measure,
+        _pGroups = exercise.pGroups,
+        _sGroups = exercise._sGroups,
+        _kcal = exercise._kcal;
+
   String get name {
     return _name;
   }

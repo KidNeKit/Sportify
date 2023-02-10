@@ -1,16 +1,13 @@
-import 'dart:developer';
-
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sportify/cubits/exercise_template/exercise_template_cubit.dart';
-import 'package:sportify/view/screens/workout_template_creation_screen/components/items/rep_item.dart';
 
+import '../../../../../cubits/exercise_template/exercise_template_cubit.dart';
 import '../../../../../models/exercise_template.dart';
 
 class ExerciseConfigItem extends StatelessWidget {
-  final ExerciseTemplate _template;
   final GlobalKey<ExpansionTileCardState> cardKey = GlobalKey();
+  ExerciseTemplate _template;
 
   ExerciseConfigItem({required ExerciseTemplate template, super.key})
       : _template = template;
@@ -35,8 +32,26 @@ class ExerciseConfigItem extends StatelessWidget {
           thickness: 1.0,
           height: 1.0,
         ),
+        BlocBuilder<ExerciseTemplateCubit, ExerciseTemplateState>(
+          builder: (context, state) {
+            _template = state.templates
+                .where((element) => element.exerciseId == _template.exerciseId)
+                .first;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...List.generate(
+                  _template.reps.length,
+                  (index) => Text('Rep №$index'),
+                )
+              ],
+            );
+          },
+        ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<ExerciseTemplateCubit>().addRepToTemplate(_template);
+          },
           child: const Text('Add Repetition'),
         ),
       ],
