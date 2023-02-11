@@ -54,6 +54,16 @@ class Exercise extends Equatable {
     };
   }
 
+  static Exercise fromMap(Map<String, dynamic> map) {
+    return Exercise(
+      name: map['name'],
+      measure: ExerciseMeasure.values.byName(map['measure']),
+      pGroups: (map['pGroups'] as List)
+          .map((e) => MuscleGroups.values.byName(e.toString()))
+          .toList(),
+    );
+  }
+
   static Exercise fromFirestore(DocumentSnapshot snapshot) {
     List<dynamic> groups = snapshot.data().toString().contains('pGroups')
         ? snapshot['pGroups']

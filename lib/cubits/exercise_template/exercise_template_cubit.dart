@@ -52,7 +52,7 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
     ExerciseTemplate sourceTemplate = state.templates[index];
     ExerciseTemplate copy =
         ExerciseTemplate.clone(exerciseTemplate: sourceTemplate);
-    copy = copy.copyWith(reps: [...copy.reps, ExerciseRep(name: 'Skib')]);
+    copy = copy.copyWith(reps: [...copy.reps, ExerciseRep()]);
 
     List<ExerciseTemplate> newList = [...state.templates];
     newList[index] = copy;
