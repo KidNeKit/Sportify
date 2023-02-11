@@ -74,7 +74,8 @@ class ExerciseTemplate extends Equatable {
       'isExpanded': _isExpanded,
       'restSec': _restSec,
       'afterExeriseRestSec': _afterExeriseRestSec,
-      'reps': _reps.toString(),
+      'reps': _reps.map((e) => e.toMap()).toList(),
+      'exercise': exercise.toMap(),
     };
   }
 

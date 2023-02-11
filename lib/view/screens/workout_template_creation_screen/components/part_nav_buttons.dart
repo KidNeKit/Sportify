@@ -87,9 +87,10 @@ class PartNavButtonsFinal extends StatelessWidget {
           ),
           const SizedBox(width: 15.0),
           NavButton(
-            label: 'Next',
+            label: 'Create',
             buttonType: NavButtonType.forward,
-            onPressedFunc: () {},
+            onPressedFunc: () =>
+                context.read<ExerciseTemplateCubit>().createWorkout(),
           ),
         ],
       ),

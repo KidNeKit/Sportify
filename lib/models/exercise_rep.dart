@@ -9,6 +9,10 @@ class ExerciseRep {
     return ExerciseRep(name: name ?? this.name);
   }
 
+  Map<String, dynamic> toMap() {
+    return {};
+  }
+
   @override
   String toString() {
     return 'name = $name';

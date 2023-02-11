@@ -1,30 +1,41 @@
 part of 'exercise_template_cubit.dart';
 
 class ExerciseTemplateState extends Equatable {
+  final String name;
   final int stepNumber;
   final List<ExerciseTemplate> templates;
   final bool showSelected;
+  final OperationStatus status;
 
   ExerciseTemplateState.initial()
-      : stepNumber = 0,
+      : name = '',
+        stepNumber = 0,
         templates = [],
-        showSelected = false;
+        showSelected = false,
+        status = OperationStatus.initial;
 
   const ExerciseTemplateState(
-      {required this.stepNumber,
+      {required this.name,
+      required this.stepNumber,
       required this.templates,
-      required this.showSelected});
+      required this.showSelected,
+      required this.status});
 
-  ExerciseTemplateState copyWith(
-      {int? stepNumber,
-      List<ExerciseTemplate>? templates,
-      bool? showSelected}) {
+  ExerciseTemplateState copyWith({
+    String? name,
+    int? stepNumber,
+    List<ExerciseTemplate>? templates,
+    bool? showSelected,
+    OperationStatus? status,
+  }) {
     return ExerciseTemplateState(
+        name: name ?? this.name,
         stepNumber: stepNumber ?? this.stepNumber,
         templates: templates ?? this.templates,
-        showSelected: showSelected ?? this.showSelected);
+        showSelected: showSelected ?? this.showSelected,
+        status: status ?? this.status);
   }
 
   @override
-  List<Object> get props => [templates, stepNumber, showSelected];
+  List<Object> get props => [name, templates, stepNumber, showSelected, status];
 }

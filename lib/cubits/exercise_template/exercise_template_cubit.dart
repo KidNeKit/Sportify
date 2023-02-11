@@ -1,16 +1,22 @@
 import 'dart:developer';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sportify/models/exercise.dart';
-import 'package:sportify/models/exercise_rep.dart';
-import 'package:sportify/models/exercise_template.dart';
-import 'package:sportify/view/screens/exercise_creation_screen/exercise_creation_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sportify/models/enums/operation_status.dart';
+import 'package:sportify/models/workout_template.dart';
+
+import '../../models/exercise_rep.dart';
+import '../../models/exercise_template.dart';
+import '../../repositories/workout_template_repository.dart';
+import '../exercise_creation/exercise_creation_cubit.dart';
 
 part 'exercise_template_state.dart';
 
 class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
-  ExerciseTemplateCubit() : super(ExerciseTemplateState.initial());
+  final WorkoutTemplateRepository _templateRepository;
+  ExerciseTemplateCubit({required WorkoutTemplateRepository templateRepository})
+      : _templateRepository = templateRepository,
+        super(ExerciseTemplateState.initial());
 
   void addExerciseTemplate(ExerciseTemplate exerciseTemplate) {
     int index = state.templates
@@ -80,5 +86,23 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
     templates[index] = template;
 
     emit(state.copyWith(templates: templates));
+  }
+
+  void changeWorkoutName(String value) {
+    emit(state.copyWith(name: value));
+  }
+
+  void createWorkout() {
+    log(state.toString());
+
+    emit(state.copyWith(status: OperationStatus.loading));
+    WorkoutTemplate template =
+        WorkoutTemplate(name: state.name, templates: state.templates);
+    _templateRepository
+        .createWorkout(template)
+        .then(
+            (value) => emit(state.copyWith(status: OperationStatus.successful)))
+        .catchError(
+            (err) => emit(state.copyWith(status: OperationStatus.failed)));
   }
 }
