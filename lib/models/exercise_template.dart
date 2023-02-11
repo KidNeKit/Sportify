@@ -8,17 +8,20 @@ class ExerciseTemplate extends Equatable {
   bool _isExpanded;
   final List<ExerciseRep> _reps;
   final int _restSec;
+  final int _afterExeriseRestSec;
 
   ExerciseTemplate(
       {required Exercise exercise,
       required bool isCustom,
       required int restSec,
+      required int afterExeriseRestSec,
       required List<ExerciseRep> reps,
       bool isExpanded = false})
       : _exercise = exercise,
         _isCustom = isCustom,
         _isExpanded = isExpanded,
         _restSec = restSec,
+        _afterExeriseRestSec = afterExeriseRestSec,
         _reps = reps;
 
   ExerciseTemplate.fromExercise({required Exercise exercise})
@@ -26,14 +29,16 @@ class ExerciseTemplate extends Equatable {
         _isCustom = true,
         _isExpanded = false,
         _reps = [],
-        _restSec = 0;
+        _restSec = 0,
+        _afterExeriseRestSec = 0;
 
   ExerciseTemplate.clone({required ExerciseTemplate exerciseTemplate})
       : _exercise = Exercise.clone(exerciseTemplate._exercise),
         _isCustom = exerciseTemplate._isCustom,
         _isExpanded = exerciseTemplate._isExpanded,
         _reps = exerciseTemplate._reps,
-        _restSec = exerciseTemplate._restSec;
+        _restSec = exerciseTemplate._restSec,
+        _afterExeriseRestSec = exerciseTemplate._afterExeriseRestSec;
 
   String get exerciseId => _exercise.name;
   Exercise get exercise => _exercise;
@@ -41,21 +46,25 @@ class ExerciseTemplate extends Equatable {
   bool get isExpanded => _isExpanded;
   List<ExerciseRep> get reps => _reps;
   int get restSec => _restSec;
+  int get afterExeriseRestSec => _afterExeriseRestSec;
 
   void changeExpandValue() {
     _isExpanded = !_isExpanded;
   }
 
-  ExerciseTemplate copyWith(
-      {Exercise? exercise,
-      bool? isCustom,
-      int? restSec,
-      List<ExerciseRep>? reps}) {
+  ExerciseTemplate copyWith({
+    Exercise? exercise,
+    bool? isCustom,
+    int? restSec,
+    List<ExerciseRep>? reps,
+    int? afterExeriseRestSec,
+  }) {
     return ExerciseTemplate(
         exercise: exercise ?? _exercise,
         isCustom: isCustom ?? _isCustom,
         restSec: restSec ?? _restSec,
-        reps: reps ?? _reps);
+        reps: reps ?? _reps,
+        afterExeriseRestSec: afterExeriseRestSec ?? _afterExeriseRestSec);
   }
 
   Map<String, dynamic> toMap() {
@@ -64,6 +73,7 @@ class ExerciseTemplate extends Equatable {
       'isCustom': _isCustom,
       'isExpanded': _isExpanded,
       'restSec': _restSec,
+      'afterExeriseRestSec': _afterExeriseRestSec,
       'reps': _reps.toString(),
     };
   }
@@ -74,6 +84,12 @@ class ExerciseTemplate extends Equatable {
   }
 
   @override
-  List<Object> get props =>
-      [_exercise, _isCustom, _restSec, _reps, _isExpanded];
+  List<Object> get props => [
+        _exercise,
+        _isCustom,
+        _restSec,
+        _afterExeriseRestSec,
+        _reps,
+        _isExpanded
+      ];
 }

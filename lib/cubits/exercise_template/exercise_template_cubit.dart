@@ -38,7 +38,10 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
   }
 
   void addRepToTemplate(ExerciseTemplate template) {
-    int index = state.templates.indexOf(template);
+    log(state.templates.toString());
+
+    int index = state.templates
+        .indexWhere((element) => element.exerciseId == template.exerciseId);
 
     ExerciseTemplate sourceTemplate = state.templates[index];
     ExerciseTemplate copy =
@@ -49,6 +52,20 @@ class ExerciseTemplateCubit extends Cubit<ExerciseTemplateState> {
     newList[index] = copy;
 
     emit(state.copyWith(templates: newList));
+  }
+
+  void changeTemplateRestTime(ExerciseTemplate template, String value) {
+    int index = state.templates
+        .indexWhere((element) => element.exerciseId == template.exerciseId);
+    state.templates[index] =
+        state.templates[index].copyWith(restSec: int.tryParse(value));
+  }
+
+  void changeRestTimeAfterExercise(ExerciseTemplate template, String value) {
+    int index = state.templates
+        .indexWhere((element) => element.exerciseId == template.exerciseId);
+    state.templates[index] = state.templates[index]
+        .copyWith(afterExeriseRestSec: int.tryParse(value));
   }
 
   void expandExercise(String exerciseId) {
