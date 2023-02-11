@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sportify/view/screens/workout_template_creation_screen/components/exercise_template_config_screen.dart';
+import 'package:sportify/view/screens/workout_template_creation_screen/workout_creation_final_screen.dart';
 
 import '../../../cubits/exercise/exercise_cubit.dart';
 import '../../../cubits/exercise_template/exercise_template_cubit.dart';
@@ -11,7 +12,8 @@ class WorkoutTemplateCreationScreen extends StatelessWidget {
 
   static const List<Widget> _creationSteps = [
     ExerciseSelection(),
-    ExerciseTemplateConfigScreen()
+    ExerciseTemplateConfigScreen(),
+    WorkoutCreationFinalScreen(),
   ];
 
   const WorkoutTemplateCreationScreen({super.key});
