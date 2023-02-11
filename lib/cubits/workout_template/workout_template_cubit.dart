@@ -34,8 +34,10 @@ class WorkoutTemplateCubit extends Cubit<WorkoutTemplateState> {
       emit(state.copyWith(status: OperationStatus.loading));
       return;
     }
+    log(state.toString());
     emit(state.copyWith(
         templates: _templates, status: OperationStatus.successful));
+    log(state.toString());
   }
 
   @override
